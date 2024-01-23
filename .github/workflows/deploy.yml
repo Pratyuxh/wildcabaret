@@ -27,14 +27,14 @@ jobs:
         env:
           IMAGE_TAG: latest-${{ github.sha }}
         run: |
-          docker build -t registry.digitalocean.com/fabs/wildcabaret-api-python:${IMAGE_TAG} .
+          docker build -t registry.digitalocean.com/superminds/wildcabaret-api-python:${IMAGE_TAG} .
           echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
 
       - name: Log in to DigitalOcean Container Registry with short-lived credentials
         run: doctl registry login --expiry-seconds 1200
 
       - name: Push image to DigitalOcean Container Registry
-        run: docker push registry.digitalocean.com/fabs/wildcabaret-api-python:${{ env.IMAGE_TAG }}
+        run: docker push registry.digitalocean.com/superminds/wildcabaret-api-python:${{ env.IMAGE_TAG }}
 
       # Step 4: Deploys to k8s
       - name: Save DigitalOcean kubeconfig with short-lived credentials
@@ -43,6 +43,6 @@ jobs:
       - name: Deploy to DigitalOcean Kubernetes
         if: github.ref == 'refs/heads/main'
         run: |
-          sed -i "s|image: registry.digitalocean.com/fabs/wildcabaret-api-python:.*|image: registry.digitalocean.com/fabs/wildcabaret-api-python:${{ env.IMAGE_TAG }}|" deployments/deployment.yaml
+          sed -i "s|image: registry.digitalocean.com/superminds/wildcabaret-api-python:.*|image: registry.digitalocean.com/superminds/wildcabaret-api-python:${{ env.IMAGE_TAG }}|" deployments/deployment.yaml
           kubectl apply -f deployments/deployment.yaml
           kubectl apply -f deployments/service.yaml
