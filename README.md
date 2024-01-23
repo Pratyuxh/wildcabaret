@@ -15,9 +15,9 @@ Step 3:
 ## Steps to run the project through docker
 
 Step 1: 
-``` docker build -t booking . ```
+``` docker build -t wildcabaret . ```
 
 Step 2: 
-``` docker run -p 5000:5000 booking ```
+``` docker run -p 5000:5000 wildcabaret ```
 
 If it does not run through this command, go to docker dektop and run your image at new port 5001

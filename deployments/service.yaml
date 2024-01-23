@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: wild-cabaret-api-python
+  name: wildcabaret-api-python
   namespace: superminds
 spec:
   ports:
@@ -9,4 +9,4 @@ spec:
       port: 80
       targetPort: 8080
   selector:
-    app: wild-cabaret-api-python
+    app: wildcabaret-api-python

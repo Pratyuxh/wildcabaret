@@ -1,6 +1,7 @@
 FROM python:3.8
 
 RUN pip install flask
+RUN pip install Flask-RESTful
 RUN pip install flask_swagger_ui
 RUN pip install pymongo
 RUN pip install boto3
@@ -10,6 +11,11 @@ RUN pip install flask_jwt_extended
 RUN pip install flask_pymongo
 RUN pip install certifi
 RUN pip install requests
+RUN pip install Flask-BasicAuth
+RUN pip install Flask-Bcrypt
+RUN pip install DateTime
+
+# RUN pip install --no-cache-dir -r requirements.txt -v
 
 WORKDIR /app
 

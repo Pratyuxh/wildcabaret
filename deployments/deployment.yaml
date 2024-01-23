@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wild-cabaret-api-python
+  name: wildcabaret-api-python
   namespace: superminds
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: wild-cabaret-api-python
+      app: wildcabaret-api-python
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app: wild-cabaret-api-python
+        app: wildcabaret-api-python
     spec:
       containers:
         - name: booking
-          image: registry.digitalocean.com/fabs/wild-cabaret-api-python:${{ env.IMAGE_TAG }}
+          image: registry.digitalocean.com/fabs/wildcabaret-api-python:${{ env.IMAGE_TAG }}
           ports:
             - name: http
               containerPort: 8080

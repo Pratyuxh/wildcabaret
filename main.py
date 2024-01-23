@@ -15,7 +15,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from botocore.exceptions import NoCredentialsError
 from bson import ObjectId
 from flask_basicauth import BasicAuth
-from marshmallow import Schema, fields, ValidationError
 from flask_bcrypt import Bcrypt
 from datetime import datetime
 
