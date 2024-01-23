@@ -16,7 +16,7 @@ spec:
         app: wildcabaret-api-python
     spec:
       containers:
-        - name: booking
+        - name: wildcabaret-api-python
           image: registry.digitalocean.com/superminds/wildcabaret-api-python:${{ env.IMAGE_TAG }}
           ports:
             - name: http
