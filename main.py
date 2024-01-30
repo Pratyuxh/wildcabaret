@@ -24,6 +24,7 @@ cors = CORS(app)
 bcrypt = Bcrypt(app)
 auth = HTTPBasicAuth()
 app.config["CORS_HEADERS"] = "Content-Type"
+
 # mongo_db_url = os.environ.get("MONGO_DB_CONN_STRING")
 # client = MongoClient(mongo_db_url)
 

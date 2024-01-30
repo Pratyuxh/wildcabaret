@@ -11,7 +11,7 @@
         "description": "Local server"
       },
       {
-        "url": "https://wild-cabaret-api-python.superminds.dev",
+        "url": "https://wildcabaret-api-python.superminds.dev",
         "description": "Production server"
       }
    ],
