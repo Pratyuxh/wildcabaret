@@ -47,8 +47,8 @@
           "tags": [
             "Login"
           ],
-          "summary": "Create a new token",
-          "description": "This endpoint will create login",
+          "summary": "Creates a new token",
+          "description": "This endpoint will help to login in the system using the Bearer Token. Write Bearer Token in the green authorize button and approve.",
           "requestBody": {
             "description": "Login Post Object",
             "required": true,
