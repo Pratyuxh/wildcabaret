@@ -1,13 +1,13 @@
 import os
 import boto3
 import certifi
-from flask import Flask, jsonify, request, make_response, render_template, flash, redirect, g, after_this_request
+from flask import Flask, jsonify, request, make_response, render_template, flash, redirect, g, after_this_request, current_app
 from flask_pymongo import PyMongo
 from flask_restful import Resource, Api
 from pymongo import MongoClient
 from flask_swagger_ui import get_swaggerui_blueprint
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity, get_jwt
 from bson.json_util import dumps
 from bson.objectid import ObjectId
 from flask_httpauth import HTTPBasicAuth
@@ -80,7 +80,7 @@ swaggerui_blueprint = get_swaggerui_blueprint(
 app.register_blueprint(swaggerui_blueprint, url_prefix = SWAGGER_URL)
 
 @app.route('/static/swagger.json')
-@auth.login_required
+@basic_auth.required
 def send_swagger_json():
     return app.send_static_file('swagger.json')
 
@@ -95,88 +95,140 @@ headers = {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMTM2MTQwMCwianRpIjoiZGJlZmY2NzAtM2IzMi00NGQ3LTlkNzItMjY2NjliNjA3OGM0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InVzZXIxIiwibmJmIjoxNzAxMzYxNDAwLCJleHAiOjE3MDEzNjIzMDB9.Il6UB4Til2jOXTTaMhaFe0SOlhKmNkBQn6S3bdKzRtE'}
 
-# Mock user data for demonstration
-# users = {
-#     'user1': {'password': 'password1'},
-#     "admin": generate_password_hash("admin"),
-# }
+# @auth.verify_password
+# def verify_password(username, password):
+#     print(f"Received username: {username}, password: {password}")
+#     user = mongo.db.users.find_one({'username': username})
+#     if user and bcrypt.check_password_hash(user['password'], password):
+#         return username
+#     if user:
+#         stored_password = user.get('password')
+#         print(f"Stored password: {stored_password}")
+#         if bcrypt.check_password_hash(stored_password, password):
+#             print("Authentication successful")
+#             return username
 
-@auth.verify_password
-def verify_password(username, password):
-    print(f"Received username: {username}, password: {password}")
-    user = mongo.db.users.find_one({'username': username})
-    if user and bcrypt.check_password_hash(user['password'], password):
-        return username
-    if user:
-        stored_password = user.get('password')
-        print(f"Stored password: {stored_password}")
-        if bcrypt.check_password_hash(stored_password, password):
-            print("Authentication successful")
-            return username
+#     print("Authentication failed")
+#     return False
 
-    print("Authentication failed")
-    return False
+# @app.route('/register', methods=['POST'])
+# def register_user():
+#     data = request.get_json()
 
-@app.route('/register', methods=['POST'])
-def register_user():
-    data = request.get_json()
+#     if 'username' not in data or 'password' not in data:
+#         return jsonify({'error': 'Username and password are required'}), 400
 
-    if 'username' not in data or 'password' not in data:
-        return jsonify({'error': 'Username and password are required'}), 400
+#     username = data['username']
+#     password = data['password']
 
-    username = data['username']
-    password = data['password']
+#     existing_user = mongo.db.users.find_one({'username': username})
+#     if existing_user:
+#         return jsonify({'error': 'Username already exists'}), 409
 
-    existing_user = mongo.db.users.find_one({'username': username})
-    if existing_user:
-        return jsonify({'error': 'Username already exists'}), 409
+#     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
-    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+#     mongo.db.users.insert_one({
+#         'username': username,
+#         'password': hashed_password
+#     })
 
-    mongo.db.users.insert_one({
-        'username': username,
-        'password': hashed_password
-    })
-
-    return jsonify({'message': 'User registered successfully'}), 201
-
-# Token creation route (login)
-@app.route('/login', methods=['GET','POST'])
-def login():
-    data = request.get_json()
-    username = data.get('username', None)
-    password = data.get('password', None)
-
-    user = mongo.db.users.find_one({'username': username})
-
-    if user and user['password'] == password:
-        access_token = create_access_token(identity=username)
-        return jsonify(access_token=access_token), 200
-    else:
-        return jsonify({'message': 'Invalid credentials'}), 401
+#     return jsonify({'message': 'User registered successfully'}), 201
 
 # # Token creation route (login)
 # @app.route('/login', methods=['GET','POST'])
 # def login():
-#     username = request.json.get('username', None)
-#     password = request.json.get('password', None)
+#     data = request.get_json()
+#     username = data.get('username', None)
+#     password = data.get('password', None)
 
-#     if username in users and users[username]['password'] == password:
+#     user = mongo.db.users.find_one({'username': username})
+
+#     if user and user['password'] == password:
 #         access_token = create_access_token(identity=username)
 #         return jsonify(access_token=access_token), 200
 #     else:
 #         return jsonify({'message': 'Invalid credentials'}), 401
 
-# @auth.verify_password
-# def verify_password(username, password):
-#     if username in users and \
-#             check_password_hash(users.get(username), password):
-#         return username
+# JWT configuration
+app.config['JWT_SECRET_KEY'] = '854d9f0a3a754b16a6e1f3655b3cfbb5'  # Change this to a secret key of your choice
+jwt = JWTManager(app)
 
-@app.route('/')
-@auth.login_required
-def index():
-    return "Hello, {}!".format(auth.current_user())
+# Register endpoint
+class Register(Resource):
+    def post(self):
+        data = request.get_json()
+        username = data.get('username')
+        password = data.get('password')
+        if not username or not password:
+            return {'message': 'Both username and password are required'}, 400
+        if collection.find_one({'username': username}):
+            return {'message': 'Username already exists'}, 400
+        new_user = User(username, password)
+        collection.insert_one({'username': new_user.username, 'password': new_user.password})
+        return {'message': 'User registered successfully'}, 201
+
+# Login endpoint
+class Login(Resource):
+    def post(self):
+        data = request.get_json()
+        username = data.get('username')
+        password = data.get('password')
+        user = collection.find_one({'username': username})
+        if not user or not check_password_hash(user['password'], password):
+            return {'message': 'Invalid username or password'}, 401
+        access_token = create_access_token(identity=username)
+        return {'access_token': access_token}, 200
+
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity, get_jwt
+
+blacklist = set()  # Set to store revoked tokens
+
+@app.route('/logout', methods=['DELETE'])
+@jwt_required()
+def logout():
+    jti = get_jwt()['jti']
+    blacklist.add(jti)
+    return jsonify({"message": "Successfully logged out"}), 200
+
+@jwt.token_in_blocklist_loader
+def check_if_token_in_blacklist(jwt_header, jwt_data):
+    jti = jwt_data['jti']
+    return jti in blacklist
+
+api.add_resource(Register, '/register')
+api.add_resource(Login, '/login')
+# api.add_resource(Logout, '/logout')
+
+# Flask-BasicAuth configuration
+app.config['BASIC_AUTH_FORCE'] = True
+app.config['BASIC_AUTH_USERNAME'] = 'admin'
+app.config['BASIC_AUTH_PASSWORD'] = 'password'
+basic_auth = BasicAuth(app)
+
+# Mock user data (for basic auth purposes)
+USERS = {
+    'user1': 'password1',
+    'user2': 'password2',
+    'admin': 'password'  # Admin credentials
+}
+
+# User model
+class User:
+    def __init__(self, username, password):
+        self.username = username
+        self.password = generate_password_hash(password)
+
+class SecretResource(Resource):
+    @basic_auth.required
+    def get(self):
+        return "Hello, {}!".format(auth.current_user())
+
+api.add_resource(SecretResource, '/')
+
+# @app.route('/')
+# @auth.login_required
+# def index():
+#     return "Hello, {}!".format(auth.current_user())
 
 apis = [
     "http://localhost:8080/book_now",

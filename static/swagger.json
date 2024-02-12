@@ -17,8 +17,8 @@
    ],
   "tags": [
       {
-        "name": "Login",
-        "description": "API for Login. "
+        "name": "Authentication",
+        "description": "API for Authentication. "
       },
       {
         "name": "Booking",
@@ -42,13 +42,68 @@
       }
    ],
   "paths": {
+      "/register": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Creates a new User",
+        "description": "This endpoint will create a new user",
+        "requestBody": {
+          "description": "Signup Post Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/schemas/signup"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "User Created",
+            "content": {
+              "application/json": {
+              "schema": {
+              "$ref": "#/serverResponseExample/createSignupSuccess"
+                }
+              }
+            }
+          }, 
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/serverResponseExample/createSignupError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/serverResponseExample/serverError"
+                }
+              }
+            }
+          }
+        }
+      }
+      },
       "/login": {
         "post": {
           "tags": [
-            "Login"
+            "Authentication"
           ],
           "summary": "Creates a new token",
-          "description": "This endpoint will help to login in the system using the Bearer Token. Write Bearer Token in the green authorize button and approve.",
+          "description": "This endpoint will help to login in the system using the Bearer Token. Write Bearer Token in the green authorize button and click on approve.",
           "requestBody": {
             "description": "Login Post Object",
             "required": true,
@@ -80,6 +135,62 @@
                 "application/json": {
                   "schema": {
                     "$ref": "#/serverResponseExample/createLoginError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/logout": {
+        "delete": {
+          "tags": [
+            "Authentication"
+          ],
+          "summary": "Logouts the user",
+          "description": "This endpoint will help the user to logout from the system.",
+          "security":[{"JWT": {} }],
+          "requestBody": {
+            "description": "Logout Post Object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/logout"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Logged out",
+              "content": {
+                "application/json": {
+                "schema": {
+                "$ref": "#/serverResponseExample/createLogoutSuccess"
+                  }
+                }
+              }
+            }, 
+            "400": {
+              "description": "Bad Request.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/createLogoutError"
                   }
                 }
               }
@@ -1460,7 +1571,34 @@
           }
         }
       },
+      "signup": {
+        "type": "object",
+        "properties": {
+            "username": {
+                "type": "string",
+                "format": "string"
+              },
+            "password": {
+                "type": "string",
+                "format": "string"
+              }
+        }
+      },
       "login": {
+        "type": "object",
+        "required": ["username", "password"],
+        "properties": {
+            "username": {
+                "type": "string",
+                "format": "string"
+              },
+            "password": {
+                "type": "string",
+                "format": "number"
+              }
+        }
+      },
+      "logout": {
         "type": "object",
         "required": ["username", "password"],
         "properties": {
@@ -1686,9 +1824,20 @@
         "msg": "Missing Authorization Header"
       }
     },
+    "createSignupError": {
+      "example": {
+        "code": 400,
+        "message": "Username is required, Password is required"
+      }
+    },
     "createLoginError": {
       "example": {
         "message": "Username is required, Password is required"
+      }
+    },
+    "createLogoutError": {
+      "example": {
+        "message": "Access Token is required "
       }
     },
     "createBookingError": {
@@ -1722,9 +1871,19 @@
         "showDate": "02.02.2024"
       }
     },
+    "createSignupSuccess": {
+      "example": {
+        "message": "User registered successfully"
+      }
+    },
     "createLoginSuccess": {
       "example": {
         "access_token" :"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMTMyNDI0NSwianRpIjoiMGJkNWI2ZGQtYjc5Yy00ODBkLWE3NzAtMzMyYmVkMWFkMWU3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InVzZXIxIiwibmJmIjoxNzAxMzI0MjQ1LCJleHAiOjE3MDEzMjUxNDV9.E1nzEIXCqMMmmE5eGbo6zdEOpVFV_bWeqFzzZ8Zg_48"
+      }
+    },
+    "createLogoutSuccess": {
+      "example": {
+        "message": "Successfully logged out"
       }
     },
     "createBookingSuccess": {
