@@ -75,6 +75,7 @@ swaggerui_blueprint = get_swaggerui_blueprint(
             },
         },
         'security': [{'basicAuth': []}],
+        'validatorUrl': None
     },
 )
 
