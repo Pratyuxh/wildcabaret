@@ -59,6 +59,7 @@ api = Api(app)
 # Configure SWAGGER
 SWAGGER_URL = '/swagger'  
 API_URL = '/static/swagger.json'  # Our API url (can of course be a local resource)
+# API_URL = '/static/swagger.yaml'
 
 swaggerui_blueprint = get_swaggerui_blueprint(
     SWAGGER_URL,  
@@ -83,6 +84,11 @@ app.register_blueprint(swaggerui_blueprint, url_prefix = SWAGGER_URL)
 @basic_auth.required
 def send_swagger_json():
     return app.send_static_file('swagger.json')
+
+# @app.route('/static/swagger.yaml')
+# @basic_auth.required
+# def send_swagger_json():
+#     return app.send_static_file('swagger.yaml')
 
 # Configure JWT
 app.config['JWT_SECRET_KEY'] = '854d9f0a3a754b16a6e1f3655b3cfbb5'
@@ -197,10 +203,7 @@ def check_if_token_in_blacklist(jwt_header, jwt_data):
 
 api.add_resource(Register, '/register')
 api.add_resource(Login, '/login')
-# api.add_resource(Logout, '/logout')
 
-# Flask-BasicAuth configuration
-app.config['BASIC_AUTH_FORCE'] = True
 app.config['BASIC_AUTH_USERNAME'] = 'admin'
 app.config['BASIC_AUTH_PASSWORD'] = 'password'
 basic_auth = BasicAuth(app)

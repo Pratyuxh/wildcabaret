@@ -1,0 +1,1352 @@
+openapi: 3.0.0
+info:
+  description: SuperMindsIT
+  version: 1.0.0
+  title: Wild Cabaret API
+servers:
+  - url: http://localhost:8080
+    description: Local server
+  - url: https://wildcabaret-api-python.superminds.dev
+    description: Production server
+tags:
+  - name: Authentication
+    description: 'API for Authentication. '
+  - name: Booking
+    description: 'API for Bookings. '
+  - name: Contact Us
+    description: 'API for Contacts. '
+  - name: Event
+    description: 'API for Events. '
+  - name: Newsletter
+    description: 'API for Newsletters. '
+  - name: Default
+    description: 'API to get All Data. '
+paths:
+  /register:
+    post:
+      tags:
+        - Authentication
+      summary: Creates a new User
+      description: This endpoint will create a new user
+      requestBody:
+        description: Signup Post Object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/signup'
+      responses:
+        '200':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: '../components/serverResponseExample/createSignupSuccess'
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/createSignupError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+  /login:
+    post:
+      tags:
+        - Authentication
+      summary: Creates a new token
+      description: This endpoint will help to login in the system using the Bearer Token. Write Bearer Token in the green authorize button and click on approve.
+      requestBody:
+        description: Login Post Object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/login'
+      responses:
+        '200':
+          description: Token Created
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/createLoginSuccess'
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/createLoginError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+  /logout:
+    delete:
+      tags:
+        - Authentication
+      summary: Logouts the user
+      description: This endpoint will help the user to logout from the system.
+      security:
+        - JWT: []
+      responses:
+        '200':
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/createLogoutSuccess'
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/createLogoutError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+  /book_now:
+    get:
+      tags:
+        - Booking
+      summary: Return bookings
+      description: This endpoint will get all bookings
+      security:
+        - JWT: []
+      responses:
+        '200':
+          description: Booking Data
+          content:
+            application/json:
+              example:
+                - _id: 655cc081add35235c1c1682c
+                  name: Fabio
+                  contactNumber: '9999966666'
+                  contactEmail: Fabio@superminds.in
+                  showDate: 04.04.2024
+                  numberOfGuests: '1000'
+                  dietaryRequirements: '10'
+                  message: BlessUs
+                - _id: 655cc081add35235c1c1682d
+                  name: Ian
+                  contactNumber: '9999966666'
+                  contactEmail: Ian@superminds.in
+                  showDate: 04.04.2024
+                  numberOfGuests: '1000'
+                  dietaryRequirements: '10'
+                  message: BlessUs
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+    post:
+      tags:
+        - Booking
+      summary: Create a new Booking
+      description: This endpoint will create booking
+      requestBody:
+        description: Booking Post Object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../serverResponseExample/createBooking'
+      responses:
+        '200':
+          description: Booking Created
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/createBookingSuccess'
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/createBookingError'
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+  /book_now/{id}:
+    get:
+      tags:
+        - Booking
+      summary: Get Booking with given ID
+      description: This endpoint will get Booking by ID.
+      security:
+        - JWT: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Booking ID
+          schema:
+            $ref: '../schemas/id'
+      responses:
+        '200':
+          description: Booking Data
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/getBookingByIdSuccess'
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '404':
+          description: Not Found Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/getBookingByIdNotFoundError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+    put:
+      summary: Update a Booking by ID
+      description: This endpoint will update a booking by ID
+      security:
+        - JWT: []
+      tags:
+        - Booking
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Update Booking
+          schema:
+            $ref: '../schemas/id'
+      requestBody:
+        description: Update Booking
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/booking'
+      responses:
+        '200':
+          description: Booking Data
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/updateBookingByIdSuccess'
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '404':
+          description: Not Found Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/getBookingByIdNotFoundError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+    delete:
+      summary: Delete Booking by ID
+      description: This API Endpoint will delete Booking by ID
+      security:
+        - JWT: []
+      tags:
+        - Booking
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Delete booking
+          schema:
+            $ref: '../schemas/id'
+      responses:
+        '200':
+          description: Booking Data
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/deleteBookingByIdSuccess'
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '404':
+          description: Not Found Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/getBookingByIdNotFoundError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+  /contacts:
+    get:
+      tags:
+        - Contact Us
+      summary: Returns Contacts
+      description: This endpoint will get all contacts
+      security:
+        - JWT: []
+      responses:
+        '200':
+          description: Contact Us Data
+          content:
+            application/json:
+              example:
+                - _id: 655cc081add35235c1c1682c
+                  contactEmail: fabio@superminds.dev
+                  contactNumber: '9999988888'
+                  dietaryRequirements: '5'
+                  message: BlessUs
+                  name: Fabio
+                  numberOfGuests: '10'
+                  showDate: 02.02.2024
+                - _id: 655cc081add35235c1c1682c
+                  contactEmail: ian@superminds.dev
+                  contactNumber: '9999988888'
+                  dietaryRequirements: '5'
+                  message: BlessUs
+                  name: Ian
+                  numberOfGuests: '10'
+                  showDate: 02.02.2024
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+    post:
+      tags:
+        - Contact Us
+      summary: Create a new Contact
+      description: This endpoint will create new contact
+      requestBody:
+        description: Contact Request Object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/contact'
+      responses:
+        '200':
+          description: Contact Created
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/createContactSuccess'
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/createContactError'
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+  /contact/{id}:
+    get:
+      tags:
+        - Contact Us
+      summary: Get contact with given ID
+      description: This endpoint will create contact with given id
+      security:
+        - JWT: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Contact id
+          schema:
+            $ref: '../schemas/id'
+      responses:
+        '200':
+          description: Contact Data
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/getContactByIdSuccess'
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '404':
+          description: Not Found Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/getContactByIdNotFoundError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+    put:
+      summary: Update a contact by ID
+      description: This endpoint will update contact by ID
+      security:
+        - JWT: []
+      tags:
+        - Contact Us
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Contact Us
+          schema:
+            $ref: '../schemas/id'
+      requestBody:
+        description: Update a Contact
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/contact'
+      responses:
+        '200':
+          description: Contact Data
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/updateContactByIdSuccess'
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '404':
+          description: Not Found Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/getContactByIdNotFoundError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+    delete:
+      summary: Delete Contact by ID
+      description: This endpoint will Delete Contact by ID
+      security:
+        - JWT: []
+      tags:
+        - Contact Us
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Book contact
+          schema:
+            $ref: '../schemas/id'
+      responses:
+        '200':
+          description: Contact Data
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/deleteContactByIdSuccess'
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '404':
+          description: Not Found Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/getContactByIdNotFoundError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+  /events:
+    get:
+      tags:
+        - Event
+      summary: Return Events
+      description: This endpoint will get events
+      security:
+        - JWT: []
+      responses:
+        '200':
+          description: Events Data
+          content:
+            application/json:
+              example:
+                - _id: 655cc081add35235c1c1682c
+                  amount: '50'
+                  childAmount: '50'
+                  date: 01.01.1000
+                  deposit: '100'
+                  description: Thanks
+                  imageURL: www.xyz.com
+                  meals: '5'
+                  reservationsEndsAt: '2'
+                  reservationsStartAt: '1'
+                  showStarts: '1'
+                  status: Accepted
+                  title: MR.
+                - _id: 655cc081add35235c1c1682d
+                  amount: '50'
+                  childAmount: '50'
+                  date: 01.01.1000
+                  deposit: '100'
+                  description: Thanks
+                  imageURL: www.xyz.com
+                  meals: '5'
+                  reservationsEndsAt: '2'
+                  reservationsStartAt: '1'
+                  showStarts: '1'
+                  status: Accepted
+                  title: MR.
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+    post:
+      tags:
+        - Event
+      summary: Create a new Event
+      description: This endpoint will create a new event
+      security:
+        - JWT: []
+      requestBody:
+        description: Event Post Object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/event'
+      responses:
+        '200':
+          description: Event Created
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/createEventSuccess'
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/createEventError'
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+  /event/{id}:
+    get:
+      tags:
+        - Event
+      summary: Get event with given ID
+      description: This endpoint will get Event by ID
+      security:
+        - JWT: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Event id
+          schema:
+            $ref: '../schemas/id'
+      responses:
+        '200':
+          description: Event Data
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/getEventByIdSuccess'
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '404':
+          description: Not Found Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/getEventByIdNotFoundError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+    put:
+      summary: Update a Event by ID
+      description: This endpoint will update Event by ID
+      security:
+        - JWT: []
+      tags:
+        - Event
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Update Event
+          schema:
+            $ref: '../schemas/id'
+      requestBody:
+        description: Update Event Object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/event'
+      responses:
+        '200':
+          description: Event Data
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/updateEventByIdSuccess'
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '404':
+          description: Not Found Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/getEventByIdNotFoundError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+    delete:
+      summary: Delete Event by ID
+      description: This endpoint will Delete Event by ID
+      security:
+        - JWT: []
+      tags:
+        - Event
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Delete Event
+          schema:
+            $ref: '../schemas/id'
+      responses:
+        '200':
+          description: Event Data
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/deleteEventByIdSuccess'
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '404':
+          description: Not Found Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/getEventByIdNotFoundError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+  /events/<id>/image:
+    post:
+      tags:
+        - Event
+      summary: Upload an Image
+      description: This endpoint will upload a new Image
+      security:
+        - JWT: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                id:
+                  type: string
+                  format: string
+                device_type:
+                  type: string
+                  format: string
+      responses:
+        '200':
+          description: Image Event Created
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/createEventImageSuccess'
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+  /events/<id>/image/<filename>:
+    delete:
+      summary: Delete Event Image
+      description: This endpoint will Delete Event Image
+      security:
+        - JWT: []
+      tags:
+        - Event
+      responses:
+        '200':
+          description: Event Image Data
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/deleteEventImageByIdSuccess'
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '404':
+          description: Not Found Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/getEventByIdNotFoundError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+  /newsletter-subscribe:
+    post:
+      tags:
+        - Newsletter
+      summary: Subscribe the Newsletter
+      description: This endpoint will subscribe the newsletter
+      requestBody:
+        description: Newsletter Post Object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/newsletter'
+      responses:
+        '200':
+          description: Newsletter Subscribed
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/createNewsletterSuccess'
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/createNewsletterError'
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+  /unsubscribe:
+    post:
+      tags:
+        - Newsletter
+      summary: Newsletter Unsubscribed
+      description: This endpoint will unsubscribe a newsletter
+      requestBody:
+        description: Newsletter Post Object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/newsletter'
+      responses:
+        '200':
+          description: Newsletter Unsubscribed
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/createNewsletterSuccess'
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/createNewsletterError'
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+  /subscribers:
+    get:
+      tags:
+        - Newsletter
+      summary: Return Subscribers
+      description: This endpoint will return all Subscribers
+      security:
+        - JWT: []
+      responses:
+        '200':
+          description: Subscriber Data
+          content:
+            application/json:
+              example:
+                - _id: 655cc081add35235c1c1682c
+                  email: fabio@superminds.dev
+                  subscribed: true
+                  created_at: '2024-01-23T06:24:33.175+00:00'
+                  updated_at: '2024-01-23T06:24:33.175+00:00'
+                - _id: 655cc081add35235c1c1682c
+                  email: ian@superminds.dev
+                  subscribed: false
+                  created_at: '2024-01-23T06:24:33.175+00:00'
+                  updated_at: '2024-01-23T06:24:33.175+00:00'
+        '401':
+          description: Unauthorized Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/unauthorizedError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '../serverResponseExample/serverError'
+  /getAllData:
+    get:
+      tags:
+        - Default
+      summary: Return All Data
+      description: This endpoint will get all bookings
+      security:
+        - JWT: []
+      responses:
+        '200':
+          description: All Data
+          content:
+            application/json: {}
+components:
+  securitySchemes:
+    JWT:
+      in: header
+      name: Authorization
+      type: apiKey
+      description: JWT authorization token. Include 'Bearer' followed by a space and the token value.
+  schemas:  # This is the problematic property
+    id:
+      type: object
+      properties:
+        id:
+          type: string
+    signup:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          format: string
+        password:
+          type: string
+          format: string
+    login:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          format: string
+        password:
+          type: string
+          format: number
+    logout:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          format: string
+        password:
+          type: string
+          format: number
+    booking:
+      type: object
+      required:
+        - name
+        - contactNumber
+        - contactEmail
+        - showDate
+        - numberOfGuests
+        - dietaryRequirements
+      properties:
+        name:
+          type: string
+          format: string
+        contactNumber:
+          type: string
+          format: number
+        contactEmail:
+          type: string
+          format: email
+        showDate:
+          type: string
+          format: string
+        numberOfGuests:
+          type: string
+          format: number
+        dietaryRequirements:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+        _id:
+          type: string
+          format: string
+    event:
+      type: object
+      required:
+        - amount
+        - childAmount
+        - date
+        - deposit
+        - description
+        - imageURL
+        - meals
+        - reservationsStartAt
+        - reservationsEndsAt
+        - showStarts
+        - status
+        - title
+      properties:
+        _id:
+          type: string
+          format: string
+        amount:
+          type: string
+          format: float
+          minimum: 0
+        childAmount:
+          type: number
+          format: string
+          minimum: 0
+        date:
+          type: string
+          format: string
+        deposit:
+          type: string
+          format: float
+          minimum: 100
+        description:
+          type: string
+          format: string
+        imageURL:
+          type: string
+          format: string
+        meals:
+          type: string
+          format: string
+          minimum: 1
+        reservationsStartAt:
+          type: string
+          format: string
+        reservationsEndsAt:
+          type: string
+          format: string
+        showStarts:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        title:
+          type: string
+          format: string
+    contact:
+      type: object
+      required:
+        - name
+        - contactNumber
+        - contactEmail
+        - showDate
+        - numberOfGuests
+        - dietaryRequirements
+      properties:
+        _id:
+          type: string
+          format: string
+        name:
+          type: string
+          format: string
+        contactNumber:
+          type: string
+          format: number
+        contactEmail:
+          type: string
+          format: email
+        showDate:
+          type: string
+          format: string
+        numberOfGuests:
+          type: string
+          format: number
+          minimum: 1
+        dietaryRequirements:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+    newsletter:
+      type: object
+      required:
+        - email
+      properties:
+        _id:
+          type: string
+          format: string
+        email:
+          type: string
+          format: email
+    bookings:
+      type: object
+      properties:
+        booking:
+          type: object
+          additionalProperties:
+            $ref: '../components/schemas/booking'
+    events:
+      type: object
+      properties:
+        event:
+          type: object
+          additionalProperties:
+            $ref: '../components/schemas/event'
+    contacts:
+      type: object
+      properties:
+        contact:
+          type: object
+          additionalProperties:
+            $ref: '../components/schemas/contact'
+    newsletters:
+      type: object
+      properties:
+        newsletter:
+          type: object
+          additionalProperties:
+            $ref: '../components/schemas/newsletter'
+  serverResponseExample:
+  notFound:
+    message: Not Found
+  serverError:
+    example:
+      message: Internal server error
+  unauthorizedError:
+    example:
+      msg: Missing Authorization Header
+  createSignupError:
+    example:
+      code: 400
+      message: Username is required, Password is required
+  createLoginError:
+    example:
+      message: Username is required, Password is required
+  createLogoutError:
+    example:
+      message: 'Access Token is required '
+  createBookingError:
+    example:
+      errors: contactEmail is required, contactNumber is required, dietaryRequirements is required, name is required, numberOfGuests is required, showDate is required, message is optional
+  createContactError:
+    example:
+      errors: contactEmail is required, contactNumber is required, dietaryRequirements is required, name is required, numberOfGuests is required, showDate is required, message is optional
+  createEventError:
+    example:
+      message: Amount is required, Deposit is required, Status is required
+  createNewsletterError:
+    example:
+      message: Contact Email is required
+  createBooking:
+    example:
+      contactEmail: fabio@superminds.dev
+      contactNumber: '9999988888'
+      dietaryRequirements: '5'
+      message: BlessUs
+      name: Fabio
+      numberOfGuests: '10'
+      showDate: 02.02.2024
+  createSignupSuccess:
+    example:
+      message: User registered successfully
+  createLoginSuccess:
+    example:
+      access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMTMyNDI0NSwianRpIjoiMGJkNWI2ZGQtYjc5Yy00ODBkLWE3NzAtMzMyYmVkMWFkMWU3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InVzZXIxIiwibmJmIjoxNzAxMzI0MjQ1LCJleHAiOjE3MDEzMjUxNDV9.E1nzEIXCqMMmmE5eGbo6zdEOpVFV_bWeqFzzZ8Zg_48
+  createLogoutSuccess:
+    example:
+      message: Successfully logged out
+  createBookingSuccess:
+    example:
+      _id: 655cc081add35235c1c1682c
+      contactEmail: fabio@superminds.dev
+      contactNumber: '9999988888'
+      dietaryRequirements: '5'
+      message: BlessUs
+      name: Fabio
+      numberOfGuests: '10'
+      showDate: 02.02.2024
+  createContactSuccess:
+    example:
+      _id: 655cc081add35235c1c1682c
+      contactEmail: fabio@superminds.dev
+      contactNumber: '9999988888'
+      dietaryRequirements: '5'
+      message: BlessUs
+      name: Fabio
+      numberOfGuests: '10'
+      showDate: 02.02.2024
+  createEventSuccess:
+    example:
+      _id: 655cc081add35235c1c1682c
+      amount: '50'
+      childAmount: '50'
+      date: 01.01.1000
+      deposit: '100'
+      description: Thanks
+      imageURL: www.xyz.com
+      meals: '5'
+      reservationsEndsAt: '2'
+      reservationsStartAt: '1'
+      showStarts: '1'
+      status: Accepted
+      title: MR.
+  createEventImageSuccess:
+    example:
+      file_url: https://wild-cabarets.fra1.digitaloceanspaces.com/wild-cabarets/filename
+      message: Image uploaded successfully
+  createNewsletterSuccess:
+    example:
+      _id: 655cc081add35235c1c1682c
+      email: ian@superminds.dev
+  getBookingByIdSuccess:
+    example:
+      _id: 655cc081add35235c1c1682c
+      contactEmail: fabio@superminds.dev
+      contactNumber: '9999988888'
+      dietaryRequirements: '5'
+      message: BlessUs
+      name: Fabio
+      numberOfGuests: '10'
+      showDate: 02.02.2024
+  getContactByIdSuccess:
+    example:
+      _id: 655cc081add35235c1c1682c
+      contactEmail: fabio@superminds.dev
+      contactNumber: '9999988888'
+      dietaryRequirements: '5'
+      message: BlessUs
+      name: Fabio
+      numberOfGuests: '10'
+      showDate: 02.02.2024
+  getEventByIdSuccess:
+    example:
+      _id: 655cc081add35235c1c1682c
+      amount: 100
+      childAmount: 100
+      date: 02.02.2024
+      deposit: '9999988888'
+      description: Nice event
+      imageURL: www.xyz.com
+      meals: '10'
+      reservationsEndsAt: '9'
+      reservationsStartAt: '5'
+      showStarts: '4'
+      status: cancelled
+      title: event
+  getNewsletterByIdSuccess:
+    example:
+      email: fabio@superminds.dev
+      _id: 655cc081add35235c1c1682c
+  getBookingByIdNotFoundError:
+    example:
+      message: Booking not found
+  getContactByIdNotFoundError:
+    example:
+      message: Contact not found
+  getEventByIdNotFoundError:
+    example:
+      message: Event not found
+  getNewsletterByIdNotFoundError:
+    example:
+      message: Newsletter not found
+  updateBookingByIdSuccess:
+    example:
+      _id: 655cc081add35235c1c1682c
+      contactEmail: fabio@superminds.dev
+      contactNumber: '9999988888'
+      dietaryRequirements: '5'
+      message: BlessUs
+      name: Fabio
+      numberOfGuests: '10'
+      showDate: 02.02.2024
+  updateContactByIdSuccess:
+    example:
+      _id: 655cc081add35235c1c1682c
+      contactEmail: fabio@superminds.dev
+      contactNumber: '9999988888'
+      dietaryRequirements: '5'
+      message: BlessUs
+      name: Fabio
+      numberOfGuests: '10'
+      showDate: 02.02.2024
+  updateEventByIdSuccess:
+    example:
+      _id: 655cc081add35235c1c1682c
+      amount: '50'
+      childAmount: '50'
+      date: 01.01.1000
+      deposit: '100'
+      description: Thanks
+      imageURL: www.xyz.com
+      meals: '5'
+      reservationsEndsAt: '2'
+      reservationsStartAt: '1'
+      showStarts: '1'
+      status: Accepted
+      title: MR.
+  updateNewsletterByIdSuccess:
+    example:
+      _id: 655cc081add35235c1c1682c
+      email: ian@superminds.dev
+  deleteBookingByIdSuccess:
+    example:
+      message: Booking Deleted successfully
+  deleteContactByIdSuccess:
+    example:
+      message: Contact Deleted successfully
+  deleteEventByIdSuccess:
+    example:
+      message: Event Deleted successfully
+  deleteEventImageByIdSuccess:
+    example:
+      message: File gradientrectangle.jpg deleted successfully
+  deleteNewsletterByIdSuccess:
+    example:
+      message: Newsletter Deleted successfully
