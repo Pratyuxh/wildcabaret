@@ -26,7 +26,7 @@
       },
       {
         "name": "Contact Us",
-        "description": "API for Contacts. "
+        "description": "API for Contact Requests. "
       },
       {
         "name": "Event",
@@ -34,11 +34,7 @@
       },
       {
         "name": "Newsletter",
-        "description": "API for Newsletters. "
-      },
-      {
-        "name": "Default",
-        "description": "API to get All Data. "
+        "description": "API for Subscribing Newsletters. "
       }
    ],
   "paths": {
@@ -47,15 +43,14 @@
         "tags": [
           "Authentication"
         ],
-        "summary": "Creates a new User",
-        "description": "This endpoint will create a new user",
+        "summary": "Creates a new user",
         "requestBody": {
-          "description": "Signup Post Object",
+          "description": "Register Post Object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/signup"
+                "$ref": "#/components/schemas/register"
               }
             }
           }
@@ -65,11 +60,11 @@
         ],
         "responses": {
           "200": {
-            "description": "User Created",
+            "description": "New User Registered",
             "content": {
               "application/json": {
               "schema": {
-              "$ref": "#/components/serverResponseExample/createSignupSuccess"
+              "$ref": "#/components/serverResponseExample/createRegisterSuccess"
                 }
               }
             }
@@ -79,7 +74,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/serverResponseExample/createSignupError"
+                  "$ref": "#/components/serverResponseExample/createRegisterError"
                 }
               }
             }
@@ -103,7 +98,7 @@
             "Authentication"
           ],
           "summary": "Creates a new token",
-          "description": "This endpoint will help to login in the system using the Bearer Token. Write Bearer Token in the green authorize button and click on approve.",
+          "description": "This endpoint will help to login in the system using the Bearer Token.",
           "requestBody": {
             "description": "Login Post Object",
             "required": true,
@@ -271,7 +266,7 @@
             "Booking"
           ],
           "summary": "Create a new Booking",
-          "description": "This endpoint will create booking",
+          "description": "This endpoint will create a new booking",
           "requestBody": {
             "description": "Booking Post Object",
             "required": true,
@@ -342,7 +337,7 @@
             "Booking"
           ],
           "summary": "Get Booking with given ID",
-          "description": "This endpoint will get Booking by ID.",
+          "description": "This endpoint will get Booking by given ID.",
           "security":[{"JWT": {} }],
           "parameters": [
             {
@@ -400,7 +395,7 @@
         },
         "put": {
           "summary": "Update a Booking by ID",
-          "description": "This endpoint will update a booking by ID",
+          "description": "This endpoint will update a booking by given ID",
           "security":[{"JWT": {} }],
           "tags": [
             "Booking"
@@ -1523,26 +1518,6 @@
             }
           }
         }  
-      },
-      "/getAllData":{
-        "get": {
-          "tags": [
-            "Default"
-          ],
-          "summary": "Return All Data",
-          "description": "This endpoint will get all bookings",
-          "security":[{"JWT": {} }],
-          "produces": "['application/json']",
-          "responses": {
-            "200": {
-              "description": "All Data",
-              "content": {
-                "application/json": {
-                }
-              }
-            }
-          }
-        }
       }
    },
   "components": {
@@ -1562,7 +1537,7 @@
           }
         }
       },
-      "signup": {
+      "register": {
         "type": "object",
         "required": ["username", "password"],
         "properties": {
@@ -1763,7 +1738,7 @@
           "booking": {
             "type": "object",
             "additionalProperties": {
-              "$ref": "#/schemas/booking"
+              "$ref": "#/components/schemas/booking"
           }
         }
      }
@@ -1774,7 +1749,7 @@
           "event": {
             "type": "object",
             "additionalProperties": {
-              "$ref": "#/schemas/event"
+              "$ref": "#/components/schemas/event"
           }
         }
      }
@@ -1785,7 +1760,7 @@
           "contact": {
             "type": "object",
             "additionalProperties": {
-              "$ref": "#/schemas/contact"
+              "$ref": "#/components/schemas/contact"
           }
         }
      }
@@ -1796,7 +1771,7 @@
           "newsletter": {
             "type": "object",
             "additionalProperties": {
-              "$ref": "#/schemas/newsletter"
+              "$ref": "#/components/schemas/newsletter"
           }
         }
      }
@@ -1816,7 +1791,7 @@
         "msg": "Missing Authorization Header"
       }
     },
-    "createSignupError": {
+    "createRegisterError": {
       "example": {
         "code": 400,
         "message": "Username is required, Password is required"
@@ -1863,7 +1838,7 @@
         "showDate": "02.02.2024"
       }
     },
-    "createSignupSuccess": {
+    "createRegisterSuccess": {
       "example": {
         "message": "User registered successfully"
       }

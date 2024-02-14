@@ -59,7 +59,6 @@ api = Api(app)
 # Configure SWAGGER
 SWAGGER_URL = '/swagger'  
 API_URL = '/static/swagger.json'  # Our API url (can of course be a local resource)
-# API_URL = '/static/swagger.yaml'
 
 swaggerui_blueprint = get_swaggerui_blueprint(
     SWAGGER_URL,  
@@ -86,11 +85,6 @@ app.register_blueprint(swaggerui_blueprint, url_prefix = SWAGGER_URL)
 def send_swagger_json():
     return app.send_static_file('swagger.json')
 
-# @app.route('/static/swagger.yaml')
-# @basic_auth.required
-# def send_swagger_json():
-#     return app.send_static_file('swagger.yaml')
-
 # Configure JWT
 app.config['JWT_SECRET_KEY'] = '854d9f0a3a754b16a6e1f3655b3cfbb5'
 jwt = JWTManager(app)
@@ -100,7 +94,8 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 
 headers = {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMTM2MTQwMCwianRpIjoiZGJlZmY2NzAtM2IzMi00NGQ3LTlkNzItMjY2NjliNjA3OGM0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InVzZXIxIiwibmJmIjoxNzAxMzYxNDAwLCJleHAiOjE3MDEzNjIzMDB9.Il6UB4Til2jOXTTaMhaFe0SOlhKmNkBQn6S3bdKzRtE'}
+    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMTM2MTQwMCwianRpIjoiZGJlZmY2NzAtM2IzMi00NGQ3LTlkNzItMjY2NjliNjA3OGM0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InVzZXIxIiwibmJmIjoxNzAxMzYxNDAwLCJleHAiOjE3MDEzNjIzMDB9.Il6UB4Til2jOXTTaMhaFe0SOlhKmNkBQn6S3bdKzRtE'
+    }
 
 # @auth.verify_password
 # def verify_password(username, password):
@@ -233,30 +228,6 @@ api.add_resource(SecretResource, '/')
 # @auth.login_required
 # def index():
 #     return "Hello, {}!".format(auth.current_user())
-
-apis = [
-    "http://localhost:8080/book_now",
-    "http://localhost:8080/contacts",
-    "http://localhost:8080/events",
-    "http://localhost:8080/newsletters"
-    # Add more endpoints as needed
-]
-
-@app.route('/getAllData', methods=['GET'])
-def get_aggregated_data():
-    aggregated_data = {}
-    # Get a list of all collection names in the database
-    collections = db.list_collection_names()
-
-    for collection_name in collections:
-        # Retrieve all documents from the current collection
-        collection_data = list(db[collection_name].find())
-          # Convert ObjectId to string in each document
-        for entry in collection_data:
-            entry['_id'] = str(entry['_id'])
-        aggregated_data[collection_name] = collection_data
-
-    return jsonify(aggregated_data)
 
 validation_rules = {
     "contactEmail": "required",
@@ -858,7 +829,6 @@ def delete_file_from_mongodb(file_name):
 @jwt_required()
 def delete_uploaded_image(id, filename):
     try:
-
         # file_name_in_digitalocean = f"{filename}"
         # Delete the file from DigitalOcean Spaces
         delete_file_from_digitalocean(filename)
@@ -893,7 +863,6 @@ class SubscribeResource(Resource):
 
         return {"message": "Subscribed successfully"}, 201
 
-
 class UnsubscribeResource(Resource):
     @jwt_required()
     def post(self):
@@ -918,7 +887,6 @@ class UnsubscribeResource(Resource):
         )
 
         return {"message": "Unsubscribed successfully"}, 200
-
 
 class SubscribersListResource(Resource):
     @jwt_required()
@@ -951,3 +919,138 @@ def delete_newsletter(id):
 # Run the flask App
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
+
+# apis = [
+#     "http://localhost:8080/book_now",
+#     "http://localhost:8080/contacts",
+#     "http://localhost:8080/events",
+#     "http://localhost:8080/newsletters"
+#     # Add more endpoints as needed
+# ]
+
+# @app.route('/getAllData', methods=['GET'])
+# def get_aggregated_data():
+#     aggregated_data = {}
+#     # Get a list of all collection names in the database
+#     collections = db.list_collection_names()
+
+#     for collection_name in collections:
+#         # Retrieve all documents from the current collection
+#         collection_data = list(db[collection_name].find())
+#           # Convert ObjectId to string in each document
+#         for entry in collection_data:
+#             entry['_id'] = str(entry['_id'])
+#         aggregated_data[collection_name] = collection_data
+
+#     return jsonify(aggregated_data)
+
+#     # User model
+
+# class User:
+#     def __init__(self, username, password):
+#         self.username = username
+#         self.password = generate_password_hash(password)
+
+# # Register endpoint for both admins and users
+
+# class Register(Resource):
+#     def post(self):
+#         data = request.get_json()
+#         username = data.get('username')
+#         password = data.get('password')
+#         role = data.get('role', 'user')  # Default role is 'user'
+#         if not username or not password:
+#             return {'message': 'Both username and password are required'}, 400
+#         if collection.find_one({'username': username}):
+#             return {'message': 'Username already exists'}, 400
+#         hashed_password = bcrypt.generate_password_hash(
+#             password).decode('utf-8')
+#         collection.insert_one(
+#             {'username': username, 'password': hashed_password, 'role': role})
+#         return {'message': 'User registered successfully'}, 201
+
+# # Login endpoint for admins
+
+# class AdminLogin(Resource):
+#     def post(self):
+#         data = request.get_json()
+#         username = data.get('username')
+#         password = data.get('password')
+#         user = collection.find_one({'username': username, 'role': 'admin'})
+#         if not user or not bcrypt.check_password_hash(user['password'], password):
+#             return {'message': 'Invalid admin credentials'}, 401
+#         access_token = create_access_token(identity=username)
+#         return {'access_token': access_token}, 200
+
+# # Login endpoint for users
+
+
+# class UserLogin(Resource):
+#     def post(self):
+#         data = request.get_json()
+#         username = data.get('username')
+#         password = data.get('password')
+#         user = collection.find_one({'username': username, 'role': 'user'})
+#         if not user or not bcrypt.check_password_hash(user['password'], password):
+#             return {'message': 'Invalid user credentials'}, 401
+#         access_token = create_access_token(identity=username)
+#         return {'access_token': access_token}, 200
+
+# api.add_resource(Register, '/register')
+# api.add_resource(AdminLogin, '/admin/login')
+# api.add_resource(UserLogin, '/user/login')
+
+# blacklist = set()  # Set to store revoked tokens
+
+# @app.route('/logout', methods=['DELETE'])
+# @jwt_required()
+# def logout():
+#     jti = get_jwt()['jti']
+#     blacklist.add(jti)
+#     return jsonify({"message": "Successfully logged out"}), 200
+
+
+# @jwt.token_in_blocklist_loader
+# def check_if_token_in_blacklist(jwt_header, jwt_data):
+#     jti = jwt_data['jti']
+#     return jti in blacklist 
+
+# # Flask-BasicAuth configuration
+# app.config['BASIC_AUTH_USERNAME'] = 'admin'
+# app.config['BASIC_AUTH_PASSWORD'] = 'password'
+# basic_auth = BasicAuth(app)
+
+# # Mock user data (for basic auth purposes)
+# USERS = {
+#     'user1': 'password1',
+#     'user2': 'password2',
+#     'admin': 'password'  # Admin credentials
+# }
+
+# class SecretResource(Resource):
+#     @basic_auth.required
+#     def get(self):
+#         return "Hello, {}!".format(auth.current_user())
+
+# api.add_resource(SecretResource, '/')
+
+# "/getAllData":{
+#         "get": {
+#           "tags": [
+#             "Default"
+#           ],
+#           "summary": "Return All Data",
+#           "description": "This endpoint will get all bookings",
+#           "security":[{"JWT": {} }],
+#           "produces": "['application/json']",
+#           "responses": {
+#             "200": {
+#               "description": "All Data",
+#               "content": {
+#                 "application/json": {
+#                 }
+#               }
+#             }
+#           }
+#         }
+#       }
