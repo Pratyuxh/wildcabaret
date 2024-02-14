@@ -44,6 +44,7 @@
           "Authentication"
         ],
         "summary": "Creates a new user",
+        "description": "This endpoint will create a new user.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>New User Registered</td>\n    <td>Register the User successfully </td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>If user have incomplete request body.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If internal server error occured</td>\n  </tr>\n</table>",
         "requestBody": {
           "description": "Register Post Object",
           "required": true,
@@ -98,7 +99,7 @@
             "Authentication"
           ],
           "summary": "Creates a new token",
-          "description": "This endpoint will help to login in the system using the Bearer Token.",
+          "description": "This endpoint will help to login in the system using the Bearer Token.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Token Created</td>\n    <td>Creates the token successfully </td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>If user have incomplete request body.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If internal server error occured</td>\n  </tr>\n</table>",
           "requestBody": {
             "description": "Login Post Object",
             "required": true,
@@ -153,19 +154,8 @@
             "Authentication"
           ],
           "summary": "Logouts the user",
-          "description": "This endpoint will help the user to logout from the system.",
+          "description": "This endpoint will help the user to logout from the system.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Logged Out</td>\n    <td>Successfully logouts from the system.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If token has been revoked.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
           "security":[{"JWT": {} }],
-          "requestBody": {
-            "description": "Logout Post Object",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/logout"
-                }
-              }
-            }
-          },
           "produces": [
             "application/json"
           ],
@@ -180,12 +170,12 @@
                 }
               }
             }, 
-            "400": {
-              "description": "Bad Request.",
+            "401": {
+              "description": "Unauthorized Error",
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/serverResponseExample/createLogoutError"
+                    "$ref": "#/components/serverResponseExample/logoutUnauthorizedError"
                   }
                 }
               }
@@ -203,11 +193,11 @@
           }
         }
       },
-      "/book_now": {
+      "/book-now": {
         "get": {
           "tags": ["Booking"],
           "summary": "Return bookings",
-          "description": "This endpoint will get all bookings",
+          "description": "This endpoint will get all bookings.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Booking Data</td>\n    <td>Return all the bookings.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
           "security":[{"JWT": {} }],
           "responses": {
             "200": {
@@ -266,7 +256,7 @@
             "Booking"
           ],
           "summary": "Create a new Booking",
-          "description": "This endpoint will create a new booking",
+          "description": "This endpoint will create a new booking.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Booking Created</td>\n    <td>Returns the created booking</td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>Returns the validation errors.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
           "requestBody": {
             "description": "Booking Post Object",
             "required": true,
@@ -322,7 +312,7 @@
           }
         }
       },
-      "/book_now/{id}": {
+      "/book-now/{id}": {
         "parameters": [
           {
             "name": "id",
@@ -337,7 +327,7 @@
             "Booking"
           ],
           "summary": "Get Booking with given ID",
-          "description": "This endpoint will get Booking by given ID.",
+          "description": "This endpoint will get Booking by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Booking Data</td>\n    <td>Returns the booking with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>Booking Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
           "security":[{"JWT": {} }],
           "parameters": [
             {
@@ -395,7 +385,7 @@
         },
         "put": {
           "summary": "Update a Booking by ID",
-          "description": "This endpoint will update a booking by given ID",
+          "description": "This endpoint will update a booking by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Booking Data</td>\n    <td>Updates the booking with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>Booking Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
           "security":[{"JWT": {} }],
           "tags": [
             "Booking"
@@ -470,7 +460,7 @@
         },
         "delete": {
           "summary": "Delete Booking by ID",
-          "description": "This API Endpoint will delete Booking by ID",
+          "description": "This API Endpoint will delete Booking by ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Booking</td>\n    <td>Booking Deleted Successfully.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>Booking Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
           "security":[{"JWT": {} }],
           "tags": [
             "Booking"
@@ -530,17 +520,17 @@
           }
         }
       },
-      "/contacts": {
+      "/contact-us": {
           "get": {
             "tags": [
               "Contact Us"
             ],
             "summary": "Returns Contacts",
-            "description": "This endpoint will get all contacts",
+            "description": "This endpoint will get all contacts.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Contact Request Data</td>\n    <td>Return all the contact requests.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "security":[{"JWT": {} }],
             "responses": {
               "200": {
-                "description": "Contact Us Data",
+                "description": "Contact Us Request Data",
                 "content": {
                   "application/json": {
                     "example": [
@@ -595,7 +585,7 @@
               "Contact Us"
             ],
             "summary": "Create a new Contact",
-            "description": "This endpoint will create new contact",
+            "description": "This endpoint will create a new contact request.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Contact Request Created</td>\n    <td>Returns the created contact request.</td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>Returns the validation errors.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "requestBody": {
               "description": "Contact Request Object",
               "required": true,
@@ -612,7 +602,7 @@
             ],
             "responses": {
               "200": {
-                "description": "Contact Created",
+                "description": "Contact Request Created",
                 "content": {
                   "application/json": {
                   "schema": {
@@ -654,7 +644,7 @@
             }
           }
       },
-      "/contact/{id}": {
+      "/contact-us/{id}": {
           "parameters": [
             {
               "name": "id",
@@ -669,14 +659,14 @@
               "Contact Us"
             ],
             "summary": "Get contact with given ID",
-            "description": "This endpoint will create contact with given id",
+            "description": "This endpoint will get contact by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Contact Request Data</td>\n    <td>Returns the contact request with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>Contact Request Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "security":[{"JWT": {} }],
             "parameters": [
               {
                 "in": "path",
                 "name": "id",
                 "required": true,
-                "description": "Contact id",
+                "description": "Contact ID",
                 "schema": {
                   "$ref": "#/components/schemas/id"
                 }
@@ -684,7 +674,7 @@
             ],
             "responses": {
               "200": {
-                "description": "Contact Data",
+                "description": "Contact Request Data",
                 "content": {
                   "application/json": {
                     "schema": {
@@ -727,7 +717,7 @@
           },
           "put": {
             "summary": "Update a contact by ID",
-            "description": "This endpoint will update contact by ID",
+            "description": "This endpoint will update a contact by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Contact Request Data</td>\n    <td>Updates the contact with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>Contact Request Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "security":[{"JWT": {} }],
             "tags": [
               "Contact Us"
@@ -759,7 +749,7 @@
             ],
             "responses": {
               "200": {
-                "description": "Contact Data",
+                "description": "Contact Request Data",
                 "content": {
                   "application/json": {
                     "schema": {
@@ -802,7 +792,7 @@
           },
           "delete": {
             "summary": "Delete Contact by ID",
-            "description": "This endpoint will Delete Contact by ID",
+            "description": "This API Endpoint will delete contact by ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Contact</td>\n    <td>Contact Deleted Successfully.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>Contact Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "security":[{"JWT": {} }],
             "tags": [
               "Contact Us"
@@ -868,7 +858,7 @@
               "Event"
             ],
             "summary": "Return Events",
-            "description": "This endpoint will get events",
+            "description": "This endpoint will get all events.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Request Data</td>\n    <td>Return all the event requests.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "security":[{"JWT": {} }],
             "responses": {
               "200": {
@@ -937,7 +927,7 @@
               "Event"
             ],
             "summary": "Create a new Event",
-            "description": "This endpoint will create a new event",
+            "description": "This endpoint will create a new event.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Created</td>\n    <td>Returns the event request.</td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>Returns the validation errors.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "security":[{"JWT": {} }],
             "requestBody": {
               "description": "Event Post Object",
@@ -997,7 +987,7 @@
             }
           }
       },
-      "/event/{id}": {
+      "/events/{id}": {
           "parameters": [
             {
               "name": "id",
@@ -1012,7 +1002,7 @@
               "Event"
             ],
             "summary": "Get event with given ID",
-            "description": "This endpoint will get Event by ID",
+            "description": "This endpoint will get event by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Data</td>\n    <td>Returns the event with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>Event Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "securityDefinitions": {
               "bearerAuth": {
                 "type": "apiKey",
@@ -1079,7 +1069,7 @@
           },
           "put": {
             "summary": "Update a Event by ID",
-            "description": "This endpoint will update Event by ID",         
+            "description": "This endpoint will update Event by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Data</td>\n    <td>Updates the event with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>Contact Request Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",         
             "security":[{"JWT": {} }],
             "tags": [
               "Event"
@@ -1154,7 +1144,7 @@
           },
           "delete": {
             "summary": "Delete Event by ID",
-            "description": "This endpoint will Delete Event by ID",          
+            "description": "This API Endpoint will delete event by ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event</td>\n    <td>Event Deleted Successfully.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>Event Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",       
             "security":[{"JWT": {} }],
             "tags": [
               "Event"
@@ -1220,7 +1210,7 @@
             "Event"
           ],
           "summary": "Upload an Image",
-          "description": "This endpoint will upload a new Image",
+          "description": "This endpoint will upload a new image.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Image Uploaded</td>\n    <td>Returns the fileurl.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
           "security":[{"JWT": {} }],
           "requestBody": {
             "content": {
@@ -1250,7 +1240,7 @@
           ],
           "responses": {
             "200": {
-              "description": "Image Event Created",
+              "description": "Event Image Uploaded",
               "content": {
                 "application/json": {
                 "schema": {
@@ -1285,7 +1275,7 @@
       "/events/<id>/image/<filename>": {
         "delete": {
           "summary": "Delete Event Image",
-          "description": "This endpoint will Delete Event Image",
+          "description": "This API Endpoint will delete event image.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Image Data</td>\n    <td>File abc.jpg deleted successfully.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>File Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",       
           "security":[{"JWT": {} }],
           "tags": [
             "Event"
@@ -1334,13 +1324,13 @@
           }
         }
       },
-      "/newsletter-subscribe": {
+      "/newsletter-signup": {
         "post": {
           "tags": [
             "Newsletter"
           ],
           "summary": "Subscribe the Newsletter",
-          "description": "This endpoint will subscribe the newsletter",
+          "description": "This endpoint will subscribe the newsletter.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Newsletter Subscribed</td>\n    <td>Returns the newsletter data.</td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>Contact Email is required</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
           "requestBody": {
             "description": "Newsletter Post Object",
             "required": true,
@@ -1397,6 +1387,59 @@
               }
             }
           }
+        },
+        "get": {
+          "tags": [
+            "Newsletter"
+          ],
+          "summary": "Return Subscribers",
+          "description": "This endpoint will return all Subscribers.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Subscribers Data</td>\n    <td>Return all the subscribers.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",           
+          "security":[{"JWT": {} }],
+          "responses": {
+            "200": {
+              "description": "Subscriber Data",
+              "content": {
+                "application/json": {
+                  "example": [
+                  {
+                    "_id":"655cc081add35235c1c1682c",
+                    "email": "fabio@superminds.dev",
+                    "subscribed": true,
+                    "created_at": "2024-01-23T06:24:33.175+00:00",
+                    "updated_at": "2024-01-23T06:24:33.175+00:00"
+                  },
+                  {
+                    "_id":"655cc081add35235c1c1682c",
+                    "email": "ian@superminds.dev",
+                    "subscribed": false,
+                    "created_at": "2024-01-23T06:24:33.175+00:00",
+                    "updated_at": "2024-01-23T06:24:33.175+00:00"
+                  }
+                ]
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
         }
       },
       "/unsubscribe": {
@@ -1405,7 +1448,7 @@
             "Newsletter"
           ],
           "summary": "Newsletter Unsubscribed",
-          "description": "This endpoint will unsubscribe a newsletter",
+          "description": "This endpoint will unsubscribe the newsletter.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Newsletter Unsubscribed</td>\n    <td>Returns the unsubscribed newsletter data.</td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>Contact Email is required</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
           "requestBody": {
             "description": "Newsletter Post Object",
             "required": true,
@@ -1463,61 +1506,6 @@
             }
           }
         }
-      },
-      "/subscribers": {
-        "get": {
-          "tags": [
-            "Newsletter"
-          ],
-          "summary": "Return Subscribers",
-          "description": "This endpoint will return all Subscribers",            
-          "security":[{"JWT": {} }],
-          "responses": {
-            "200": {
-              "description": "Subscriber Data",
-              "content": {
-                "application/json": {
-                  "example": [
-                  {
-                    "_id":"655cc081add35235c1c1682c",
-                    "email": "fabio@superminds.dev",
-                    "subscribed": true,
-                    "created_at": "2024-01-23T06:24:33.175+00:00",
-                    "updated_at": "2024-01-23T06:24:33.175+00:00"
-                  },
-                  {
-                    "_id":"655cc081add35235c1c1682c",
-                    "email": "ian@superminds.dev",
-                    "subscribed": false,
-                    "created_at": "2024-01-23T06:24:33.175+00:00",
-                    "updated_at": "2024-01-23T06:24:33.175+00:00"
-                  }
-                ]
-                }
-              }
-            },
-            "401": {
-              "description": "Unauthorized Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/serverResponseExample/unauthorizedError"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/serverResponseExample/serverError"
-                  }
-                }
-              }
-            }
-          }
-        }  
       }
    },
   "components": {
@@ -1789,6 +1777,11 @@
     "unauthorizedError": {
       "example": {
         "msg": "Missing Authorization Header"
+      }
+    },
+    "logoutUnauthorizedError": {
+      "example": {
+        "msg": "Token has been revoked"
       }
     },
     "createRegisterError": {

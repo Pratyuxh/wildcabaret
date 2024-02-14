@@ -240,7 +240,7 @@ validation_rules = {
     }
 
 # Create a booking
-@app.route('/book_now', methods=['POST'])
+@app.route('/book-now', methods=['POST'])
 def create_booking():
     # Assuming you receive JSON data in the request
     data = request.get_json()
@@ -281,7 +281,7 @@ def validate_data(data, validation_rules):
     return errors
 
 # Update a booking
-@app.route('/book_now/<id>', methods=['PUT'])
+@app.route('/book-now/<id>', methods=['PUT'])
 @jwt_required()
 def update_booking(id):
     id = ObjectId(id)
@@ -318,7 +318,7 @@ def update_booking(id):
         return jsonify(response_data)
 
 # Get all books
-@app.route('/book_now', methods=['GET'])
+@app.route('/book-now', methods=['GET'])
 @jwt_required()
 def get_bookings():
     bookings = list(collection1.find())
@@ -328,7 +328,7 @@ def get_bookings():
         data.append(booking)
     return jsonify(data)    
 # Get a specific booking by ID
-@app.route('/book_now/<id>', methods=['GET'])
+@app.route('/book-now/<id>', methods=['GET'])
 @jwt_required()
 def booking(id):
     booking = collection1.find_one({'_id':ObjectId(id)})
@@ -339,7 +339,7 @@ def booking(id):
         return jsonify({"error": "Booking Not Found"}), 404
 
 # Delete a booking
-@app.route('/book_now/<id>', methods=['DELETE'])
+@app.route('/book-now/<id>', methods=['DELETE'])
 @jwt_required()
 def delete_booking(id):
     id = ObjectId(id)
@@ -351,7 +351,7 @@ def delete_booking(id):
         return jsonify({"error": "Booking not found or not deleted"}), 404
 
 # Create a contact
-@app.route('/contacts', methods=['POST'])
+@app.route('/contact-us', methods=['POST'])
 def create_contact():
     data = request.get_json()
     validation_errors = validate_data(data, validation_rules)
@@ -387,7 +387,7 @@ def validate_data(data, validation_rules):
     return errors
 
 # Update a contact
-@app.route('/contact/<id>', methods=['PUT'])
+@app.route('/contact-us/<id>', methods=['PUT'])
 @jwt_required()
 def update_contact(id):
     id = ObjectId(id)
@@ -424,7 +424,7 @@ def update_contact(id):
         return jsonify(response_data)
 
 # Get all contacts
-@app.route('/contacts', methods=['GET'])
+@app.route('/contact-us', methods=['GET'])
 @jwt_required()
 def get_contacts():
     contacts = list(collection2.find())
@@ -435,7 +435,7 @@ def get_contacts():
     return jsonify(data)
 
 # Get a specific contact by ID
-@app.route('/contact/<id>')
+@app.route('/contact-us/<id>')
 @jwt_required()
 def contact(id):
     contact = collection2.find_one({'_id':ObjectId(id)})
@@ -446,7 +446,7 @@ def contact(id):
         return jsonify({"error": "Contact Not Found"}), 404
 
 # Delete a contact
-@app.route('/contact/<id>', methods=['DELETE'])
+@app.route('/contact-us/<id>', methods=['DELETE'])
 @jwt_required()
 def delete_contact(id):
     id = ObjectId(id)
@@ -626,7 +626,7 @@ validation_rules3 = {
     # return errors
 
 # Update a event
-@app.route('/event/<id>', methods=['PUT'])
+@app.route('/events/<id>', methods=['PUT'])
 @jwt_required()
 def update_event(id):
     id = ObjectId(id)
@@ -678,7 +678,7 @@ def get_events():
     return jsonify(data)
 
 # Get a specific event by ID
-@app.route('/event/<id>')
+@app.route('/events/<id>')
 @jwt_required()
 def event(id):
     event = collection3.find_one({'_id':ObjectId(id)})
@@ -689,7 +689,7 @@ def event(id):
         return jsonify({"error": "Event Not Found"}), 404
 
 # Delete a event
-@app.route('/event/<id>', methods=['DELETE'])
+@app.route('/events/<id>', methods=['DELETE'])
 @jwt_required()
 def delete_event(id):
     id = ObjectId(id)
@@ -900,21 +900,21 @@ class SubscribersListResource(Resource):
         return jsonify(data)
 
 # API routes
-api.add_resource(SubscribeResource, "/newsletter-subscribe")
+api.add_resource(SubscribeResource, "/newsletter-signup")
 api.add_resource(UnsubscribeResource, "/unsubscribe")
-api.add_resource(SubscribersListResource, "/subscribers")
+api.add_resource(SubscribersListResource, "/newsletter-signup")
 
-# Delete a newsletter
-@app.route('/newsletter/<id>', methods=['DELETE'])
-@jwt_required()
-def delete_newsletter(id):
-    id = ObjectId(id)
-    result = collection4.delete_one({"_id": ObjectId(id)})
+# # Delete a newsletter
+# @app.route('/newsletter-signup/<id>', methods=['DELETE'])
+# @jwt_required()
+# def delete_newsletter(id):
+#     id = ObjectId(id)
+#     result = collection4.delete_one({"_id": ObjectId(id)})
 
-    if result.deleted_count > 0:
-        return jsonify({"message": "Subscriber deleted successfully"})
-    else:
-        return jsonify({"error": "Subscriber not found or not deleted"}), 404
+#     if result.deleted_count > 0:
+#         return jsonify({"message": "Subscriber deleted successfully"})
+#     else:
+#         return jsonify({"error": "Subscriber not found or not deleted"}), 404
 
 # Run the flask App
 if __name__ == '__main__':
