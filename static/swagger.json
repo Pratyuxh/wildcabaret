@@ -1784,19 +1784,30 @@
       }
     },
     "createRegisterError": {
-      "example": {
-        "code": 400,
-        "message": "Username is required, Password is required"
+      "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+              "example": ["Username is required", "Password is required"]
+        }
       }
     },
     "createLoginError": {
-      "example": {
-        "message": "Username is required, Password is required"
+      "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+              "example": ["Username is required", "Password is required"]
+        }
       }
     },
     "createLogoutError": {
-      "example": {
-        "message": "Access Token is required "
+      "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+              "example": ["Access Token is required"]
+        }
       }
     },
     "createBookingError": {
