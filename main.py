@@ -457,112 +457,6 @@ def delete_contact(id):
     else:
         return jsonify({"error": "Contact not found or not deleted"}), 404
 
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-MAX_FILE_SIZE_BYTES = 500 * 500 #10 * 1024 * 1024
-DO_SPACES_ENDPOINT = 'https://wild-cabarets.fra1.digitaloceanspaces.com'  # Replace with your Space URL
-DO_ACCESS_KEY = 'DO00H8HLFYNACV6LJ3GP'  # Replace with your DigitalOcean Spaces access key
-DO_SECRET_KEY = 'fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY'  # Replace with your DigitalOcean Spaces secret key
-DO_BUCKET_NAME = 'wild-cabarets'  # Replace with your DigitalOcean Spaces bucket name
-
-def allowed_file_size(file):
-    return file.content_length <= MAX_FILE_SIZE_BYTES
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-@app.route('/events', methods=['POST'])
-@jwt_required()
-def create_event():
-    try:
-        # Assuming you receive JSON data in the request
-        data = request.json
-
-        # Validate the data (your validation_rules3 and validate_data function)
-        validation_errors = validate_data(data, validation_rules3)
-
-        if validation_errors:
-            # If there are validation errors, send a response with the errors
-            return jsonify({"errors": validation_errors}), 400
-
-        # Check if the POST request has the file part
-        if 'file' not in request.files or 'device_type' not in request.form:
-            return jsonify({"error": "No file or device type provided"}), 400
-
-        file = request.files['file']
-        device_type = request.form['device_type']
-
-        # If the user does not select a file, the browser submits an empty file without a filename
-        if file.filename == '':
-            return jsonify({"error": "No selected file"}), 400
-
-        file_name = file.filename
-
-        # Upload the file to DigitalOcean Spaces and get the file URL
-        file_url = upload_to_digitalocean(file, file_name)
-
-        # Add file_url to your event data
-        data['imageURL'] = file_url
-
-        # Insert the event data into your collection
-        inserted_id = collection3.insert_one(data).inserted_id
-
-        # Construct the response
-        response_data = {
-            "amount": data.get("amount"),
-            "childAmount": data.get("childAmount"),
-            "date": data.get("date"),
-            "deposit": data.get("deposit"),
-            "description": data.get("description"),
-            "imageURL": file_url,
-            "meals": data.get("meals"),
-            "reservationsStartAt": data.get("reservationsStartAt"),
-            "reservationsEndsAt": data.get("reservationsEndsAt"),
-            "showStarts": data.get("showStarts"),
-            "status": data.get("status"),
-            "title": data.get("title"),
-            "_id": str(inserted_id)
-            # Add more fields as needed
-        }
-
-        return jsonify(response_data), 200
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-def validate_data(data, validation_rules3):
-    errors = []
-
-    for field, rule in validation_rules3.items():
-        if rule == "required" and not data.get(field):
-            errors.append(f"{field} is required.")
-        elif rule == "optional" and field in data and not data.get(field):
-            errors.append(f"{field} must be optional.")
-
-    return errors
-
-def upload_to_digitalocean(file, file_name):
-    try:
-        s3 = boto3.client('s3',
-            aws_access_key_id=DO_ACCESS_KEY,
-            aws_secret_access_key=DO_SECRET_KEY,
-            endpoint_url=DO_SPACES_ENDPOINT
-        )
-
-        # Upload the file to DigitalOcean Spaces
-        s3.upload_fileobj(file, DO_BUCKET_NAME, file_name)
-
-        # Get the public URL of the uploaded file
-        file_url = f"{DO_SPACES_ENDPOINT}/{DO_BUCKET_NAME}/{file_name}"
-
-        return file_url
-
-    except NoCredentialsError:
-        raise Exception('Credentials not available. Check your DigitalOcean Spaces access key and secret key.')
-    except Exception as e:
-        raise Exception(str(e))
-
-
-
 validation_rules3 = {
     "amount": "required",
     "childAmount": "required",
@@ -578,52 +472,52 @@ validation_rules3 = {
     "title": "required"
     }
 
-# # Create an event
-# @app.route('/events', methods=['POST'])
-# @jwt_required()
-# def create_event():
-#     # Assuming you receive JSON data in the request
-#     data = request.get_json()
-#     # Perform your validations
-#     validation_errors = validate_data(data, validation_rules3)
+# Create an event
+@app.route('/events', methods=['POST'])
+@jwt_required()
+def create_event():
+    # Assuming you receive JSON data in the request
+    data = request.get_json()
+    # Perform your validations
+    validation_errors = validate_data(data, validation_rules3)
 
-#     if validation_errors:
-#         # If there are validation errors, send a response with the errors
-#         return jsonify({"errors": validation_errors}), 400
+    if validation_errors:
+        # If there are validation errors, send a response with the errors
+        return jsonify({"errors": validation_errors}), 400
 
-#     inserted_id = collection3.insert_one(data).inserted_id
+    inserted_id = collection3.insert_one(data).inserted_id
 
-#     # If validation passes, create a response with the desired data
-#     response_data = {
-#         "amount": data.get("amount"),
-#         "childAmount": data.get("childAmount"),
-#         "date": data.get("date"),
-#         "deposit": data.get("deposit"),
-#         "description": data.get("description"),
-#         "imageURL": data.get("imageURL"),
-#         "meals": data.get("meals"),
-#         "reservationsStartAt": data.get("reservationsStartAt"),
-#         "reservationsEndsAt": data.get("reservationsEndsAt"),
-#         "showStarts": data.get("showStarts"),
-#         "status": data.get("status"),
-#         "title": data.get("title"),
-#         "_id": str(inserted_id)
-#         # Add more fields as needed
-#     }
+    # If validation passes, create a response with the desired data
+    response_data = {
+        "amount": data.get("amount"),
+        "childAmount": data.get("childAmount"),
+        "date": data.get("date"),
+        "deposit": data.get("deposit"),
+        "description": data.get("description"),
+        "imageURL": data.get("imageURL"),
+        "meals": data.get("meals"),
+        "reservationsStartAt": data.get("reservationsStartAt"),
+        "reservationsEndsAt": data.get("reservationsEndsAt"),
+        "showStarts": data.get("showStarts"),
+        "status": data.get("status"),
+        "title": data.get("title"),
+        "_id": str(inserted_id)
+        # Add more fields as needed
+    }
 
-#     # Send the response in JSON format
-#     return jsonify(response_data)
+    # Send the response in JSON format
+    return jsonify(response_data)
 
-# def validate_data(data, validation_rules3):
-    # errors = []
+def validate_data(data, validation_rules3):
+    errors = []
 
-    # for field, rule in validation_rules3.items():
-    #     if rule == "required" and not data.get(field):
-    #         errors.append(f"{field} is required.")
-    #     elif rule == "optional" and field in data and not data.get(field):
-    #         errors.append(f"{field} must be optional.")
+    for field, rule in validation_rules3.items():
+        if rule == "required" and not data.get(field):
+            errors.append(f"{field} is required.")
+        elif rule == "optional" and field in data and not data.get(field):
+            errors.append(f"{field} must be optional.")
 
-    # return errors
+    return errors
 
 # Update a event
 @app.route('/events/<id>', methods=['PUT'])
@@ -701,52 +595,52 @@ def delete_event(id):
         return jsonify({"error": "Event not found or not deleted"}), 404
 
 # # UPLOAD_FOLDER = '/Users/pratyushsharma/booking'
-# ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-# MAX_FILE_SIZE_BYTES = 500 * 500 #10 * 1024 * 1024
-# # DigitalOcean Spaces configurations
-# DO_SPACES_ENDPOINT = 'https://wild-cabarets.fra1.digitaloceanspaces.com'  # Replace with your Space URL
-# DO_ACCESS_KEY = 'DO00H8HLFYNACV6LJ3GP'  # Replace with your DigitalOcean Spaces access key
-# DO_SECRET_KEY = 'fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY'  # Replace with your DigitalOcean Spaces secret key
-# DO_BUCKET_NAME = 'wild-cabarets'  # Replace with your DigitalOcean Spaces bucket name
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+MAX_FILE_SIZE_BYTES = 500 * 500 #10 * 1024 * 1024
+# DigitalOcean Spaces configurations
+DO_SPACES_ENDPOINT = 'https://wild-cabarets.fra1.digitaloceanspaces.com'  # Replace with your Space URL
+DO_ACCESS_KEY = 'DO00H8HLFYNACV6LJ3GP'  # Replace with your DigitalOcean Spaces access key
+DO_SECRET_KEY = 'fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY'  # Replace with your DigitalOcean Spaces secret key
+DO_BUCKET_NAME = 'wild-cabarets'  # Replace with your DigitalOcean Spaces bucket name
 
-# def allowed_file_size(file):
-#     return file.content_length <= MAX_FILE_SIZE_BYTES
+def allowed_file_size(file):
+    return file.content_length <= MAX_FILE_SIZE_BYTES
 
-# def allowed_file(filename):
-#     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# def upload_to_digitalocean(file, file_name, device_type, event_id):
-#     try:
-#         s3 = boto3.client('s3',
-#             aws_access_key_id='DO00H8HLFYNACV6LJ3GP',
-#             aws_secret_access_key='fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY',
-#             endpoint_url=DO_SPACES_ENDPOINT
-#         )
+def upload_to_digitalocean(file, file_name, device_type, event_id):
+    try:
+        s3 = boto3.client('s3',
+            aws_access_key_id='DO00H8HLFYNACV6LJ3GP',
+            aws_secret_access_key='fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY',
+            endpoint_url=DO_SPACES_ENDPOINT
+        )
 
-#         # Create a folder with the specified device type
-#         folder_path = f"{device_type}/"
-#         file_path = os.path.join(folder_path, file_name)
+        # Create a folder with the specified device type
+        folder_path = f"{device_type}/"
+        file_path = os.path.join(folder_path, file_name)
 
-#         # Upload the file to DigitalOcean Spaces
-#         s3.upload_fileobj(file, DO_BUCKET_NAME, file_path)
+        # Upload the file to DigitalOcean Spaces
+        s3.upload_fileobj(file, DO_BUCKET_NAME, file_path)
 
-#         # Get the public URL of the uploaded file
-#         file_url = f"{DO_SPACES_ENDPOINT}/{DO_BUCKET_NAME}/{file_path}"
+        # Get the public URL of the uploaded file
+        file_url = f"{DO_SPACES_ENDPOINT}/{DO_BUCKET_NAME}/{file_path}"
 
-#         file_info = {
-#             'filename': file_name,
-#             'device_type': device_type,
-#             'url': file_url,
-#             'event_id': event_id  # Assuming you have an 'id' variable available in your code
-#         }
-#         files_collection.insert_one(file_info)
+        file_info = {
+            'filename': file_name,
+            'device_type': device_type,
+            'url': file_url,
+            'event_id': event_id  # Assuming you have an 'id' variable available in your code
+        }
+        files_collection.insert_one(file_info)
 
-#         return file_url
+        return file_url
 
-#     except NoCredentialsError:
-#         raise Exception('Credentials not available. Check your DigitalOcean Spaces access key and secret key.')
-#     except Exception as e:
-#         raise Exception(str(e))
+    except NoCredentialsError:
+        raise Exception('Credentials not available. Check your DigitalOcean Spaces access key and secret key.')
+    except Exception as e:
+        raise Exception(str(e))
 
 @app.route('/events/<id>/image', methods=['POST', 'DELETE'])
 @jwt_required()

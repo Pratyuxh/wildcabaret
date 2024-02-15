@@ -1515,8 +1515,8 @@
         "name": "Authorization",
         "type": "apiKey",
         "description": "JWT authorization token. Include 'Bearer' followed by a space and the token value."
-      }
-    },
+       }
+     },
     "schemas": {
       "id": {
         "properties": {
@@ -1764,7 +1764,7 @@
         }
      }
       }
-    },
+     },
     "serverResponseExample": {
     "notFound": {
       "message": "Not Found"
@@ -2039,6 +2039,6 @@
         "message": "Newsletter Deleted successfully"
       }
     }
-    }
+     }
     }
   }
