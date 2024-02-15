@@ -286,36 +286,35 @@ def validate_data(data, validation_rules):
 def update_booking(id):
     id = ObjectId(id)
     data = request.get_json()
-    # validation_errors = validate_data(data, validation_rules)
 
-    # if validation_errors:
-    #     return jsonify({"errors": validation_errors}), 400
-    
-    existing_document = collection1.find_one({"_id": id})
+    booking = collection1.find_one({'_id':ObjectId(id)})
+    if booking is None:
+        return jsonify({"error": "Booking not found"}), 404
 
-    if existing_document is None:
-        return jsonify({"error": "Document not found"}), 404
-
-    result = collection1.update_many({"_id": ObjectId(id)}, {"$set": data})
-
-    response_data = {
-        "contactEmail": data.get("contactEmail"),
-        "contactNumber": data.get("contactNumber"),
-        "dietaryRequirements": data.get("dietaryRequirements"),
-        "message": data.get("message"),
-        "name": data.get("name"),
-        "numberOfGuests": data.get("numberOfGuests"),
-        "showDate": data.get("showDate"),
-        "_id": str(id)
+    existing_data = {
+        "contactEmail": booking.get("contactEmail"),
+        "contactNumber": booking.get("contactNumber"),
+        "dietaryRequirements": booking.get("dietaryRequirements"),
+        "message": booking.get("message"),
+        "name": booking.get("name"),
+        "numberOfGuests": booking.get("numberOfGuests"),
+        "showDate": booking.get("showDate"),
         # Add more fields as needed
     }
 
+    data.pop('_id', None)
+    # Merge existing data with new data
+    merged_data = {**existing_data, **data}
+
+    result = collection1.update_many({"_id": ObjectId(id)}, {"$set": merged_data})
+
+
     if result.matched_count == 0:
-        return jsonify({"error": "Document not found"}), 404
+        return jsonify({"error": "Booking not found"}), 404
     elif result.modified_count == 0:
-        return jsonify({"error": "Document not updated"}), 404
+        return jsonify({"error": "Booking not updated"}), 404
     else:
-        return jsonify(response_data)
+        return jsonify(merged_data)
 
 # Get all books
 @app.route('/book-now', methods=['GET'])
