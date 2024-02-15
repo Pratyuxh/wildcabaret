@@ -283,7 +283,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/serverResponseExample/createBooking"
+                  "$ref": "#/components/schemas/booking"
                 }
               }
             }
@@ -1854,17 +1854,6 @@
             "type": "array",
               "example": ["ContactEmail is required"]
         }
-      }
-    },
-    "createBooking": {
-      "example": {
-        "contactEmail": "fabio@superminds.dev",
-        "contactNumber": "9999988888",
-        "dietaryRequirements": "5",
-        "message": "BlessUs",
-        "name": "Fabio",
-        "numberOfGuests": "10",
-        "showDate": "02.02.2024"
       }
     },
     "createRegisterSuccess": {

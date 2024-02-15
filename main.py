@@ -296,7 +296,7 @@ def update_booking(id):
     if existing_document is None:
         return jsonify({"error": "Document not found"}), 404
 
-    result = collection1.update_one({"_id": ObjectId(id)}, {"$set": data})
+    result = collection1.update_many({"_id": ObjectId(id)}, {"$set": data})
 
     response_data = {
         "contactEmail": data.get("contactEmail"),
@@ -392,17 +392,12 @@ def validate_data(data, validation_rules):
 def update_contact(id):
     id = ObjectId(id)
     data = request.get_json()
-    # validation_errors = validate_data(data, validation_rules)
-
-    # if validation_errors:
-    #     return jsonify({"errors": validation_errors}), 400
-    
     existing_document = collection2.find_one({"_id": id})
 
     if existing_document is None:
         return jsonify({"error": "Contact not found"}), 404
 
-    result = collection2.update_one({"_id": ObjectId(id)}, {"$set": data})
+    result = collection2.update_many({"_id": ObjectId(id)}, {"$set": data})
 
     response_data = {
         "contactEmail": data.get("contactEmail"),
@@ -535,7 +530,7 @@ def update_event(id):
     if existing_document is None:
         return jsonify({"error": "Event not found"}), 404
 
-    result = collection3.update_one({"_id": ObjectId(id)}, {"$set": data})
+    result = collection3.update_many({"_id": ObjectId(id)}, {"$set": data})
 
     response_data = {
         "amount": data.get("amount"),
