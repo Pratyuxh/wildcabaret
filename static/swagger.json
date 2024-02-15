@@ -109,7 +109,7 @@
             "Authentication"
           ],
           "summary": "Creates a new token",
-          "description": "This endpoint will help to login in the system using the Bearer Token.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Token Created</td>\n    <td>Creates the token successfully </td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>If user have incomplete request body.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If internal server error occured</td>\n  </tr>\n</table>",
+          "description": "This endpoint will help to login in the system using the Bearer Token.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Token Created</td>\n    <td>Creates the token successfully </td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>If user have incomplete request body.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Invalid Credentials</td>\n    <td>Invalid username or password</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If internal server error occured</td>\n  </tr>\n</table>",
           "requestBody": {
             "description": "Login Post Object",
             "required": true,
@@ -141,6 +141,16 @@
                 "application/json": {
                   "schema": {
                     "$ref": "#/components/serverResponseExample/createLoginError"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/serverResponseExample/invalidcredentialsError"
                   }
                 }
               }
