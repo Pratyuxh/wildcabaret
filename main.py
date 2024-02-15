@@ -286,10 +286,10 @@ def validate_data(data, validation_rules):
 def update_booking(id):
     id = ObjectId(id)
     data = request.get_json()
-    validation_errors = validate_data(data, validation_rules)
+    # validation_errors = validate_data(data, validation_rules)
 
-    if validation_errors:
-        return jsonify({"errors": validation_errors}), 400
+    # if validation_errors:
+    #     return jsonify({"errors": validation_errors}), 400
     
     existing_document = collection1.find_one({"_id": id})
 
@@ -392,10 +392,10 @@ def validate_data(data, validation_rules):
 def update_contact(id):
     id = ObjectId(id)
     data = request.get_json()
-    validation_errors = validate_data(data, validation_rules)
+    # validation_errors = validate_data(data, validation_rules)
 
-    if validation_errors:
-        return jsonify({"errors": validation_errors}), 400
+    # if validation_errors:
+    #     return jsonify({"errors": validation_errors}), 400
     
     existing_document = collection2.find_one({"_id": id})
 
@@ -525,10 +525,10 @@ def validate_data(data, validation_rules3):
 def update_event(id):
     id = ObjectId(id)
     data = request.get_json()
-    validation_errors = validate_data(data, validation_rules3)
+    # validation_errors = validate_data(data, validation_rules3)
 
-    if validation_errors:
-        return jsonify({"errors": validation_errors}), 400
+    # if validation_errors:
+    #     return jsonify({"errors": validation_errors}), 400
     
     existing_document = collection3.find_one({"_id": id})
 
