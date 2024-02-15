@@ -326,6 +326,7 @@ def get_bookings():
         booking['_id'] = str(booking['_id']) 
         data.append(booking)
     return jsonify(data)    
+
 # Get a specific booking by ID
 @app.route('/book-now/<id>', methods=['GET'])
 @jwt_required()
@@ -391,24 +392,25 @@ def validate_data(data, validation_rules):
 def update_contact(id):
     id = ObjectId(id)
     data = request.get_json()
-    existing_document = collection2.find_one({"_id": id})
+    existing_document = collection2.find_one({'_id':ObjectId(id)})
 
     if existing_document is None:
         return jsonify({"error": "Contact not found"}), 404
 
-    result = collection2.update_many({"_id": ObjectId(id)}, {"$set": data})
-
     response_data = {
-        "contactEmail": data.get("contactEmail"),
-        "contactNumber": data.get("contactNumber"),
-        "dietaryRequirements": data.get("dietaryRequirements"),
-        "message": data.get("message"),
-        "name": data.get("name"),
-        "numberOfGuests": data.get("numberOfGuests"),
-        "showDate": data.get("showDate"),
-        "_id": str(id)
+        "contactEmail": existing_document.get("contactEmail"),
+        "contactNumber": existing_document.get("contactNumber"),
+        "dietaryRequirements": existing_document.get("dietaryRequirements"),
+        "message": existing_document.get("message"),
+        "name": existing_document.get("name"),
+        "numberOfGuests": existing_document.get("numberOfGuests"),
+        "showDate": existing_document.get("showDate")
         # Add more fields as needed
     }
+
+    data.pop('_id', None)
+    merged_data = {**response_data, **data}
+    result = collection2.update_many({"_id": ObjectId(id)}, {"$set": merged_data})
 
     if result.matched_count == 0:
         return jsonify({"error": "Contact not found"}), 404
@@ -519,34 +521,29 @@ def validate_data(data, validation_rules3):
 def update_event(id):
     id = ObjectId(id)
     data = request.get_json()
-    # validation_errors = validate_data(data, validation_rules3)
+    existing_document = collection3.find_one({'_id':ObjectId(id)})
 
-    # if validation_errors:
-    #     return jsonify({"errors": validation_errors}), 400
-    
-    existing_document = collection3.find_one({"_id": id})
- 
     if existing_document is None:
         return jsonify({"error": "Event not found"}), 404
 
-    result = collection3.update_many({"_id": ObjectId(id)}, {"$set": data})
-
     response_data = {
-        "amount": data.get("amount"),
-        "childAmount": data.get("childAmount"),
-        "date": data.get("date"),
-        "deposit": data.get("deposit"),
-        "description": data.get("description"),
-        "imageURL": data.get("imageURL"),
-        "meals": data.get("meals"),
-        "reservationsStartAt": data.get("reservationsStartAt"),
-        "reservationsEndsAt": data.get("reservationsEndsAt"),
-        "showStarts": data.get("showStarts"),
-        "status": data.get("status"),
-        "title": data.get("title"),
-        "_id": str(id)
-        # Add more fields as needed
+        "amount": existing_document.get("amount"),
+        "childAmount": existing_document.get("childAmount"),
+        "date": existing_document.get("date"),
+        "deposit": existing_document.get("deposit"),
+        "description": existing_document.get("description"),
+        "imageURL": existing_document.get("imageURL"),
+        "meals": existing_document.get("meals"),
+        "reservationsStartAt": existing_document.get("reservationsStartAt"),
+        "reservationsEndsAt": existing_document.get("reservationsEndsAt"),
+        "showStarts": existing_document.get("showStarts"),
+        "status": existing_document.get("status"),
+        "title": existing_document.get("title")
     }
+
+    data.pop('_id', None)
+    merged_data = {**response_data, **data}
+    result = collection3.update_many({"_id": ObjectId(id)}, {"$set": merged_data})
 
     if result.matched_count == 0:
         return jsonify({"error": "Event not found"}), 404
