@@ -1800,23 +1800,39 @@
       }
     },
     "createBookingError": {
-      "example": {
-        "errors": "contactEmail is required, contactNumber is required, dietaryRequirements is required, name is required, numberOfGuests is required, showDate is required, message is optional"
+      "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+              "example": ["contactEmail is required", "contactNumber is required", "dietaryRequirements is required", "name is required", "numberOfGuests is required", "showDate is required", "message is optional"]
+        }
       }
     },
     "createContactError": {
-      "example": {
-        "errors": "contactEmail is required, contactNumber is required, dietaryRequirements is required, name is required, numberOfGuests is required, showDate is required, message is optional"
+      "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+              "example": ["contactEmail is required", "contactNumber is required", "dietaryRequirements is required", "name is required", "numberOfGuests is required", "showDate is required", "message is optional"]
+        }
       }
     },
     "createEventError": {
-      "example": {
-        "message": "Amount is required, Deposit is required, Status is required"
+      "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+              "example": ["amount is required", "childAmount is required", "date is required", "deposit is required", "description is required", "imageURL is required", "imageURL is required", "meals is required", "reservationsStartAt is required", "reservationsEndsAt is required", "showStarts is required", "status is required", "title is required"]
+        }
       }
     },
     "createNewsletterError": {
-      "example": {
-        "message": "Contact Email is required"
+      "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+              "example": ["ContactEmail is required"]
+        }
       }
     },
     "createBooking": {

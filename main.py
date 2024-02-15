@@ -531,7 +531,7 @@ def update_event(id):
     #     return jsonify({"errors": validation_errors}), 400
     
     existing_document = collection3.find_one({"_id": id})
-
+ 
     if existing_document is None:
         return jsonify({"error": "Event not found"}), 404
 
