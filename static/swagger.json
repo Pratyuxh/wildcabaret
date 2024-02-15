@@ -1608,10 +1608,6 @@
             "message": {
                 "type": "string",
                 "format": "string"
-              },
-            "_id":{
-              "type": "string",
-              "format": "string"
               }
         }
       },
@@ -1619,10 +1615,6 @@
         "type": "object",
         "required": ["amount", "childAmount", "date", "deposit", "description", "imageURL", "meals", "reservationsStartAt", "reservationsEndsAt", "showStarts", "status", "title"],
         "properties": {
-              "_id":{
-                "type": "string",
-                "format": "string"
-              },
               "amount": {
                 "type": "string",
                 "format": "float",
@@ -1681,10 +1673,6 @@
         "type": "object",
         "required": ["name", "contactNumber", "contactEmail", "showDate", "numberOfGuests", "dietaryRequirements"],
         "properties": {
-            "_id":{
-                "type": "string",
-                "format": "string"
-              },
             "name": {
                 "type": "string",
                 "format": "string"
@@ -1720,10 +1708,6 @@
         "type": "object",
         "required": ["email"],
         "properties": {
-            "_id":{
-                "type": "string",
-                "format": "string"
-            },
             "email": {
                 "type": "string",
                 "format": "email"
