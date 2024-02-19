@@ -227,23 +227,23 @@
                   "example": [
                     {
                       "_id": "655cc081add35235c1c1682c",
+                      "contactEmail": "fabio@superminds.dev",
+                      "contactNumber": "100",
+                      "dietaryRequirements": "Yes",
+                      "message": "God Bless You",
                       "name": "Fabio",
-                      "contactNumber": "9999966666",
-                      "contactEmail": "Fabio@superminds.in",
-                      "showDate": "04.04.2024",
-                      "numberOfGuests": "1000",
-                      "dietaryRequirements": "10",
-                      "message": "BlessUs"
+                      "numberOfGuests": "100",
+                      "showDate": "2024-03-01"              
                     },
                     {
                       "_id": "655cc081add35235c1c1682d",
+                      "contactEmail": "ian@superminds.dev",
+                      "contactNumber": "100",
+                      "dietaryRequirements": "Yes",
+                      "message": "God Bless You",
                       "name": "Ian",
-                      "contactNumber": "9999966666",
-                      "contactEmail": "Ian@superminds.in",
-                      "showDate": "04.04.2024",
-                      "numberOfGuests": "1000",
-                      "dietaryRequirements": "10",
-                      "message": "BlessUs"
+                      "numberOfGuests": "100",
+                      "showDate": "2024-03-01"              
                     }
                   ]
                 }
@@ -266,7 +266,7 @@
             "Booking"
           ],
           "summary": "Create a new Booking",
-          "description": "This endpoint will create a new booking.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Booking Created</td>\n    <td>Returns the created booking</td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>Returns the validation errors.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
+          "description": "This endpoint will create a new booking.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n3) The dietaryRequirements must be one of **Yes, No**.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Booking Created</td>\n    <td>Returns the created booking</td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>Returns the validation errors.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
           "requestBody": {
             "description": "Booking Post Object",
             "required": true,
@@ -366,7 +366,7 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/serverResponseExample/unauthorizedError"
+                    "$ref": "#/components/serverResponseExample/unauthorizedIdError"
                   }
                 }
               }
@@ -441,7 +441,7 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/serverResponseExample/unauthorizedError"
+                    "$ref": "#/components/serverResponseExample/unauthorizedIdError"
                   }
                 }
               }
@@ -502,7 +502,7 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/serverResponseExample/unauthorizedError"
+                    "$ref": "#/components/serverResponseExample/unauthorizedIdError"
                   }
                 }
               }
@@ -552,7 +552,7 @@
                       "message": "BlessUs",
                       "name": "Fabio",
                       "numberOfGuests": "10",
-                      "showDate": "02.02.2024"
+                      "showDate": "2024-03-01"
                     },
                     {
                       "_id":"655cc081add35235c1c1682c",
@@ -562,7 +562,7 @@
                       "message": "BlessUs",
                       "name": "Ian",
                       "numberOfGuests": "10",
-                      "showDate": "02.02.2024"
+                      "showDate": "2024-03-01"
                     }
                     ]
                   }
@@ -626,7 +626,7 @@
                 "content": {
                   "application/json": {
                     "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedError"
+                      "$ref": "#/components/serverResponseExample/unauthorizedIdError"
                     }
                   }
                 }
@@ -688,7 +688,7 @@
                 "content": {
                   "application/json": {
                     "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedError"
+                      "$ref": "#/components/serverResponseExample/unauthorizedIdError"
                     }
                   }
                 }
@@ -763,7 +763,7 @@
                 "content": {
                   "application/json": {
                     "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedError"
+                      "$ref": "#/components/serverResponseExample/unauthorizedIdError"
                     }
                   }
                 }
@@ -824,7 +824,7 @@
                 "content": {
                   "application/json": {
                     "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedError"
+                      "$ref": "#/components/serverResponseExample/unauthorizedIdError"
                     }
                   }
                 }
@@ -870,29 +870,29 @@
                       "_id":"655cc081add35235c1c1682c",
                       "amount": "50",
                       "childAmount": "50",
-                      "date": "1999-09-01",
-                      "deposit": "100",
-                      "description": "Thanks",                   
-                      "meals": "5",
-                      "reservationsEndsAt": "2",
-                      "reservationsStartAt": "1",
-                      "showStarts": "1",
+                      "date": "1999-01-09",
+                      "deposit": "10",
+                      "description": "thanks",
+                      "meals": "1",
+                      "reservationsEndsAt": "6:00PM",
+                      "reservationsStartAt": "10:00AM",
+                      "showStarts": "8:00PM",
                       "status": "book now",
-                      "title": "MR."
+                      "title": "FRIDAY CABARET SHOW"
                     },
                     {
                       "_id":"655cc081add35235c1c1682d",
                       "amount": "50",
                       "childAmount": "50",
-                      "date": "1999-09-01",
-                      "deposit": "100",
-                      "description": "Thanks",
-                      "meals": "5",
-                      "reservationsEndsAt": "2",
-                      "reservationsStartAt": "1",
-                      "showStarts": "1",
-                      "status": "cancelled",
-                      "title": "MR."
+                      "date": "1999-01-09",
+                      "deposit": "10",
+                      "description": "thanks",
+                      "meals": "1",
+                      "reservationsEndsAt": "6:00PM",
+                      "reservationsStartAt": "10:00AM",
+                      "showStarts": "8:00PM",
+                      "status": "book now",
+                      "title": "FRIDAY CABARET SHOW"
                     }
                   ]
                   }
@@ -1037,7 +1037,7 @@
                 "content": {
                   "application/json": {
                     "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedEventError"
+                      "$ref": "#/components/serverResponseExample/unauthorizedIdError"
                     }
                   }
                 }
@@ -1102,7 +1102,7 @@
                 "content": {
                   "application/json": {
                     "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedEventError"
+                      "$ref": "#/components/serverResponseExample/unauthorizedIdError"
                     }
                   }
                 }
@@ -1153,7 +1153,7 @@
                 "content": {
                   "application/json": {
                     "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedEventError"
+                      "$ref": "#/components/serverResponseExample/unauthorizedIdError"
                     }
                   }
                 }
@@ -1221,7 +1221,7 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/serverResponseExample/unauthorizedError"
+                    "$ref": "#/components/serverResponseExample/unauthorizedIdError"
                   }
                 }
               }
@@ -1283,7 +1283,7 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/serverResponseExample/unauthorizedError"
+                    "$ref": "#/components/serverResponseExample/unauthorizedIdError"
                   }
                 }
               }
@@ -1549,32 +1549,20 @@
                 "format": "string"
               },
             "password": {
-                "type": "string",
+                "type": "string",  
                 "format": "number"
               }
         }
       },
-      "booking": {
+      "booking":  {
         "type": "object",
         "required": ["name", "contactNumber", "contactEmail", "showDate", "numberOfGuests", "dietaryRequirements"],
         "properties": {
-            "name": {
-                "type": "string",
-                "format": "string"
-              },
-            "contactNumber": {
-                "type": "string",
-                "format": "number"
-              },
             "contactEmail": {
                 "type": "string",
                 "format": "email"
               },
-            "showDate": {
-                "type": "string",
-                "format": "string"
-              },
-            "numberOfGuests": {
+            "contactNumber": {
                 "type": "string",
                 "format": "number"
               },
@@ -1583,6 +1571,18 @@
                 "format": "string"
               },
             "message": {
+                "type": "string",
+                "format": "string"
+              },
+            "name": {
+                "type": "string",
+                "format": "string"
+              },
+            "numberOfGuests": {
+                "type": "string",
+                "format": "number"
+              },
+            "showDate": {
                 "type": "string",
                 "format": "string"
               }
@@ -1646,35 +1646,34 @@
         "type": "object",
         "required": ["name", "contactNumber", "contactEmail", "showDate", "numberOfGuests", "dietaryRequirements"],
         "properties": {
-            "name": {
-                "type": "string",
-                "format": "string"
-              },
-            "contactNumber": {
-                "type": "string",
-                "format": "number"
-              },
-            "contactEmail": {
-                "type": "string",
-                "format": "email"
-              },
-            "showDate": {
-                "type": "string",
-                "format": "string"
-              },
-            "numberOfGuests": {
-                "type": "string",
-                "format": "number",
-                "minimum": "1"
-              },
-            "dietaryRequirements": {
-                "type": "string",
-                "format": "string"
-              },
-            "message": {
-                "type": "string",
-                "format": "string"
-              }
+          "contactEmail": {
+            "type": "string",
+            "format": "email"
+          },
+        "contactNumber": {
+            "type": "string",
+            "format": "number"
+          },
+        "dietaryRequirements": {
+            "type": "string",
+            "format": "string"
+          },
+        "message": {
+            "type": "string",
+            "format": "string"
+          },
+        "name": {
+            "type": "string",
+            "format": "string"
+          },
+        "numberOfGuests": {
+            "type": "string",
+            "format": "number"
+          },
+        "showDate": {
+            "type": "string",
+            "format": "string"
+          }
         }
       },
       "newsletter": {
@@ -1707,9 +1706,9 @@
         "msg": "Missing Authorization Header"
       }
     },
-    "unauthorizedEventError": {
+    "unauthorizedIdError": {
       "example": {
-        "msg": "Invalid Object ID"
+        "msg": "Invalid ID"
       }
     },
     "logoutUnauthorizedError": {
@@ -1806,26 +1805,26 @@
     },
     "createBookingSuccess": {
       "example": {
-        "_id":"655cc081add35235c1c1682c",
+        "_id": "655cc081add35235c1c1682c",
         "contactEmail": "fabio@superminds.dev",
-        "contactNumber": "9999988888",
-        "dietaryRequirements": "5",
-        "message": "BlessUs",
+        "contactNumber": "100",
+        "dietaryRequirements": "Yes",
+        "message": "God Bless You",
         "name": "Fabio",
-        "numberOfGuests": "10",
-        "showDate": "02.02.2024"   
+        "numberOfGuests": "100",
+        "showDate": "2024-03-01"              
       }
     },
     "createContactSuccess": {
       "example": {
-        "_id":"655cc081add35235c1c1682c",
+        "_id": "655cc081add35235c1c1682c",
         "contactEmail": "fabio@superminds.dev",
-        "contactNumber": "9999988888",
-        "dietaryRequirements": "5",
-        "message": "BlessUs",
+        "contactNumber": "100",
+        "dietaryRequirements": "Yes",
+        "message": "God Bless You",
         "name": "Fabio",
-        "numberOfGuests": "10",
-        "showDate": "02.02.2024"
+        "numberOfGuests": "100",
+        "showDate": "2024-03-01"              
       }
     },
     "createEventSuccess": {
@@ -1834,14 +1833,14 @@
         "amount": "50",
         "childAmount": "50",
         "date": "1999-01-09",
-        "deposit": "100",
-        "description": "Thanks",
-        "meals": "5",
-        "reservationsEndsAt": "2",
-        "reservationsStartAt": "1",
-        "showStarts": "1",
+        "deposit": "10",
+        "description": "thanks",
+        "meals": "1",
+        "reservationsEndsAt": "6:00PM",
+        "reservationsStartAt": "10:00AM",
+        "showStarts": "8:00PM",
         "status": "book now",
-        "title": "MR."
+        "title": "FRIDAY CABARET SHOW"
       }
     },
     "createEventImageSuccess": {
@@ -1858,43 +1857,42 @@
     },
     "getBookingByIdSuccess": {
       "example": {
-        "_id":"655cc081add35235c1c1682c",
+        "_id": "655cc081add35235c1c1682c",
         "contactEmail": "fabio@superminds.dev",
-        "contactNumber": "9999988888",
-        "dietaryRequirements": "5",
-        "message": "BlessUs",
+        "contactNumber": "100",
+        "dietaryRequirements": "Yes",
+        "message": "God Bless You",
         "name": "Fabio",
-        "numberOfGuests": "10",
-        "showDate": "2024-01-01"
-        
+        "numberOfGuests": "100",
+        "showDate": "2024-03-01"              
       }
     },
     "getContactByIdSuccess": {
       "example": {
-        "_id":"655cc081add35235c1c1682c",
+        "_id": "655cc081add35235c1c1682c",
         "contactEmail": "fabio@superminds.dev",
-        "contactNumber": "9999988888",
-        "dietaryRequirements": "5",
-        "message": "BlessUs",
+        "contactNumber": "100",
+        "dietaryRequirements": "Yes",
+        "message": "God Bless You",
         "name": "Fabio",
-        "numberOfGuests": "10",
-        "showDate": "2024-01-01"
+        "numberOfGuests": "100",
+        "showDate": "2024-03-01"              
       }
     },
     "getEventByIdSuccess": {
       "example": {
         "_id":"655cc081add35235c1c1682c",
-        "amount": 100,
-        "childAmount": 100,
-        "date": "2024-01-01",
-        "deposit": "9999988888",
-        "description": "Nice event",
-        "meals": "10",
-        "reservationsEndsAt": "9",
-        "reservationsStartAt": "5",
-        "showStarts": "4",
-        "status": "cancelled",
-        "title": "event"
+        "amount": "50",
+        "childAmount": "50",
+        "date": "1999-01-09",
+        "deposit": "10",
+        "description": "thanks",
+        "meals": "1",
+        "reservationsEndsAt": "6:00PM",
+        "reservationsStartAt": "10:00AM",
+        "showStarts": "8:00PM",
+        "status": "book now",
+        "title": "FRIDAY CABARET SHOW"
       }
     },
     "getNewsletterByIdSuccess": {
@@ -1925,26 +1923,26 @@
     },
     "updateBookingByIdSuccess": {
       "example": {
-        "_id":"655cc081add35235c1c1682c",
+        "_id": "655cc081add35235c1c1682c",
         "contactEmail": "fabio@superminds.dev",
-        "contactNumber": "9999988888",
-        "dietaryRequirements": "5",
-        "message": "BlessUs",
+        "contactNumber": "100",
+        "dietaryRequirements": "Yes",
+        "message": "God Bless You",
         "name": "Fabio",
-        "numberOfGuests": "10",
-        "showDate": "02.02.2024"
+        "numberOfGuests": "100",
+        "showDate": "2024-03-01"              
       }
     },
     "updateContactByIdSuccess": {
       "example": {
-        "_id":"655cc081add35235c1c1682c",
+        "_id": "655cc081add35235c1c1682c",
         "contactEmail": "fabio@superminds.dev",
-        "contactNumber": "9999988888",
-        "dietaryRequirements": "5",
-        "message": "BlessUs",
+        "contactNumber": "100",
+        "dietaryRequirements": "Yes",
+        "message": "God Bless You",
         "name": "Fabio",
-        "numberOfGuests": "10",
-        "showDate": "02.02.2024"
+        "numberOfGuests": "100",
+        "showDate": "2024-03-01"              
       }
     },
     "updateEventByIdSuccess": {
@@ -1952,15 +1950,15 @@
         "_id":"655cc081add35235c1c1682c",
         "amount": "50",
         "childAmount": "50",
-        "date": "01.01.1000",
-        "deposit": "100",
-        "description": "Thanks",
-        "meals": "5",
-        "reservationsEndsAt": "2",
-        "reservationsStartAt": "1",
-        "showStarts": "1",
-        "status": "Accepted",
-        "title": "MR."
+        "date": "1999-01-09",
+        "deposit": "10",
+        "description": "thanks",
+        "meals": "1",
+        "reservationsEndsAt": "6:00PM",
+        "reservationsStartAt": "10:00AM",
+        "showStarts": "8:00PM",
+        "status": "book now",
+        "title": "FRIDAY CABARET SHOW"
       }
     },
     "updateNewsletterByIdSuccess": {
@@ -1994,6 +1992,6 @@
         "message": "Newsletter Deleted successfully"
       }
     }
-     }
+    }
     }
   }

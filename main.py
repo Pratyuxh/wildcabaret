@@ -232,7 +232,7 @@ api.add_resource(SecretResource, '/')
 validation_rules = {
     "contactEmail": "required",
     "contactNumber": "required",
-    "dietaryRequirements": "required",
+    "dietaryRequirements": ["required", "in:Yes, No"],
     "message": "optional",
     "name": "required",
     "numberOfGuests": "required",
@@ -250,6 +250,12 @@ def create_booking():
     if validation_errors:
         # If there are validation errors, send a response with the errors
         return jsonify({"errors": validation_errors}), 400
+
+    # Validate date format
+    try:
+        datetime.strptime(data["showDate"], "%Y-%m-%d")
+    except ValueError:
+        return jsonify({"errors": ["Invalid date format. Date must be in YYYY-MM-DD format."]}), 400
 
     inserted_id = collection1.insert_one(data).inserted_id
 
@@ -331,6 +337,8 @@ def get_bookings():
 @app.route('/book-now/<id>', methods=['GET'])
 @jwt_required()
 def booking(id):
+    if not ObjectId.is_valid(id):
+        return jsonify({"error": "Invalid Object ID"}), 401  # Return 401 for invalid ID
     booking = collection1.find_one({'_id':ObjectId(id)})
     if booking:
         booking["_id"] = str(booking["_id"])
@@ -342,7 +350,9 @@ def booking(id):
 @app.route('/book-now/<id>', methods=['DELETE'])
 @jwt_required()
 def delete_booking(id):
-    id = ObjectId(id)
+    # id = ObjectId(id)
+    if not ObjectId.is_valid(id):
+        return jsonify({"error": "Invalid Object ID"}), 401  # Return 401 for invalid ID
     result = collection1.delete_one({"_id": ObjectId(id)})
 
     if result.deleted_count > 0:
@@ -390,7 +400,10 @@ def validate_data(data, validation_rules):
 @app.route('/contact-us/<id>', methods=['PUT'])
 @jwt_required()
 def update_contact(id):
-    id = ObjectId(id)
+    # id = ObjectId(id)
+    if not ObjectId.is_valid(id):
+        return jsonify({"error": "Invalid Object ID"}), 401  # Return 401 for invalid ID
+
     data = request.get_json()
     existing_document = collection2.find_one({'_id':ObjectId(id)})
 
@@ -434,6 +447,9 @@ def get_contacts():
 @app.route('/contact-us/<id>')
 @jwt_required()
 def contact(id):
+    if not ObjectId.is_valid(id):
+        return jsonify({"error": "Invalid Object ID"}), 401  # Return 401 for invalid ID
+
     contact = collection2.find_one({'_id':ObjectId(id)})
     if contact:
         contact["_id"] = str(contact["_id"])
@@ -445,7 +461,10 @@ def contact(id):
 @app.route('/contact-us/<id>', methods=['DELETE'])
 @jwt_required()
 def delete_contact(id):
-    id = ObjectId(id)
+    # id = ObjectId(id)
+    if not ObjectId.is_valid(id):
+        return jsonify({"error": "Invalid Object ID"}), 401  # Return 401 for invalid ID
+
     result = collection2.delete_one({"_id": ObjectId(id)})
 
     if result.deleted_count > 0:
@@ -735,6 +754,19 @@ def delete_file_from_mongodb(file_name):
     # Delete the file information from MongoDB
     files_collection.delete_one({'filename': file_name})
 
+# Check if file exists in DigitalOcean Spaces bucket
+def file_exists_in_digitalocean(filename):
+    s3 = boto3.client('s3',
+        aws_access_key_id=DO_ACCESS_KEY,
+        aws_secret_access_key=DO_SECRET_KEY,
+        endpoint_url=DO_SPACES_ENDPOINT
+    )
+    try:
+        s3.head_object(Bucket=DO_BUCKET_NAME, Key=filename)
+        return True
+    except:
+        return False
+
 @app.route('/events/<id>/image/<filename>', methods=['DELETE'])
 @jwt_required()
 def delete_uploaded_image(id, filename):
@@ -743,6 +775,10 @@ def delete_uploaded_image(id, filename):
 
     if not allowed_file(filename):
         return jsonify({"error": "Invalid filename format"}), 401
+
+     # Check if file exists in DigitalOcean Spaces bucket
+    # if not file_exists_in_digitalocean(filename):
+    #     return jsonify({"error": "File does not exist"}), 404  # Use 404 for "Not Found"
 
     try:
         delete_file_from_digitalocean(filename)
