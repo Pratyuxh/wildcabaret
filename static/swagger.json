@@ -1037,7 +1037,7 @@
                 "content": {
                   "application/json": {
                     "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedError"
+                      "$ref": "#/components/serverResponseExample/unauthorizedEventError"
                     }
                   }
                 }
@@ -1112,7 +1112,7 @@
                 "content": {
                   "application/json": {
                     "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedError"
+                      "$ref": "#/components/serverResponseExample/unauthorizedEventError"
                     }
                   }
                 }
@@ -1173,7 +1173,7 @@
                 "content": {
                   "application/json": {
                     "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedError"
+                      "$ref": "#/components/serverResponseExample/unauthorizedEventError"
                     }
                   }
                 }
@@ -1735,6 +1735,11 @@
     "unauthorizedError": {
       "example": {
         "msg": "Missing Authorization Header"
+      }
+    },
+    "unauthorizedEventError": {
+      "example": {
+        "msg": "Invalid Object ID"
       }
     },
     "logoutUnauthorizedError": {

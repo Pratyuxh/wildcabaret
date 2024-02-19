@@ -453,6 +453,8 @@ def delete_contact(id):
     else:
         return jsonify({"error": "Contact not found or not deleted"}), 404
 
+from datetime import datetime
+
 validation_rules3 = {
     "amount": "required",
     "childAmount": "required",
@@ -480,6 +482,12 @@ def create_event():
         # If there are validation errors, send a response with the errors
         return jsonify({"errors": validation_errors}), 400
 
+    # Validate date format
+    try:
+        datetime.strptime(data["date"], "%Y-%m-%d")
+    except ValueError:
+        return jsonify({"errors": ["Invalid date format. Date must be in YYYY-MM-DD format."]}), 400
+
     inserted_id = collection3.insert_one(data).inserted_id
 
     # If validation passes, create a response with the desired data
@@ -502,16 +510,6 @@ def create_event():
     # Send the response in JSON format
     return jsonify(response_data)
 
-# def validate_data(data, validation_rules3):
-#     errors = []
-
-#     for field, rule in validation_rules3.items():
-#         if rule == "required" and not data.get(field):
-#             errors.append(f"{field} is required.")
-#         elif rule == "optional" and field in data and not data.get(field):
-#             errors.append(f"{field} must be optional.")
-
-#     return errors
 def validate_data(data, validation_rules3):
     errors = []
 
@@ -536,7 +534,11 @@ def validate_data(data, validation_rules3):
 @app.route('/events/<id>', methods=['PUT'])
 @jwt_required()
 def update_event(id):
-    id = ObjectId(id)
+    # id = ObjectId(id)
+
+    if not ObjectId.is_valid(id):
+        return jsonify({"error": "Invalid Object ID"}), 401  # Return 401 for invalid ID
+
     data = request.get_json()
     existing_document = collection3.find_one({'_id':ObjectId(id)})
 
@@ -581,6 +583,10 @@ def get_events():
 # Get a specific event by ID
 @app.route('/events/<id>')
 def event(id):
+
+    if not ObjectId.is_valid(id):
+        return jsonify({"error": "Invalid Object ID"}), 401  # Return 401 for invalid ID
+
     event = collection3.find_one({'_id':ObjectId(id)})
     if event:
         event["_id"] = str(event["_id"])
@@ -592,7 +598,11 @@ def event(id):
 @app.route('/events/<id>', methods=['DELETE'])
 @jwt_required()
 def delete_event(id):
-    id = ObjectId(id)
+    # id = ObjectId(id)
+
+    if not ObjectId.is_valid(id):
+        return jsonify({"error": "Invalid Object ID"}), 401  # Return 401 for invalid ID
+
     result = collection3.delete_one({"_id": ObjectId(id)})
 
     if result.deleted_count > 0:
