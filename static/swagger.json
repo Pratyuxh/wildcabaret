@@ -1593,7 +1593,7 @@
         "required": ["amount", "childAmount", "date", "deposit", "description", "meals", "reservationsStartAt", "reservationsEndsAt", "showStarts", "status", "title"],
         "properties": {
               "amount": {
-                "type": "string",
+                "type": "float",
                 "format": "float",
                 "minimum": "0"
               },
@@ -1607,9 +1607,9 @@
                 "format": "string"
               },
               "deposit": {
-                "type": "string",
+                "type": "float",
                 "format": "float",
-                "minimum": "100"
+                "minimum": "1"
               },
               "description": {
                 "type": "string",
