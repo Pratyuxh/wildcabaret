@@ -738,12 +738,14 @@ def delete_file_from_mongodb(file_name):
 @app.route('/events/<id>/image/<filename>', methods=['DELETE'])
 @jwt_required()
 def delete_uploaded_image(id, filename):
-    try:
-        # file_name_in_digitalocean = f"{filename}"
-        # Delete the file from DigitalOcean Spaces
-        delete_file_from_digitalocean(filename)
+    if not ObjectId.is_valid(id):
+        return jsonify({"error": "Invalid Object ID"}), 401
 
-        # Delete the file information from MongoDB
+    if not allowed_file(filename):
+        return jsonify({"error": "Invalid filename format"}), 401
+
+    try:
+        delete_file_from_digitalocean(filename)
         delete_file_from_mongodb(filename)
 
         return {'message': f'File {filename} deleted successfully'}

@@ -870,7 +870,7 @@
                       "_id":"655cc081add35235c1c1682c",
                       "amount": "50",
                       "childAmount": "50",
-                      "date": "01.01.1000",
+                      "date": "1999-09-01",
                       "deposit": "100",
                       "description": "Thanks",                   
                       "meals": "5",
@@ -884,7 +884,7 @@
                       "_id":"655cc081add35235c1c1682d",
                       "amount": "50",
                       "childAmount": "50",
-                      "date": "01.01.1000",
+                      "date": "1999-09-01",
                       "deposit": "100",
                       "description": "Thanks",
                       "meals": "5",
@@ -1000,7 +1000,7 @@
               "Event"
             ],
             "summary": "Get event with given ID",
-            "description": "This endpoint will get event by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Data</td>\n    <td>Returns the event with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>Event Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
+            "description": "This endpoint will get event by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Data</td>\n    <td>Returns the event with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "securityDefinitions": {
               "bearerAuth": {
                 "type": "apiKey",
@@ -1042,16 +1042,6 @@
                   }
                 }
               },
-              "404": {
-                "description": "Not Found Error",
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "$ref": "#/components/serverResponseExample/getEventByIdNotFoundError"
-                    }
-                  }
-                }
-              },
               "500": {
                 "description": "Server Error",
                 "content": {
@@ -1066,7 +1056,7 @@
           },
           "put": {
             "summary": "Update a Event by ID",
-            "description": "This endpoint will update Event by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Data</td>\n    <td>Updates the event with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>Contact Request Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",         
+            "description": "This endpoint will update Event by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Data</td>\n    <td>Updates the event with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n   <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",         
             "security":[{"JWT": {} }],
             "tags": [
               "Event"
@@ -1117,16 +1107,6 @@
                   }
                 }
               },
-              "404": {
-                "description": "Not Found Error",
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "$ref": "#/components/serverResponseExample/getEventByIdNotFoundError"
-                    }
-                  }
-                }
-              },
               "500": {
                 "description": "Server Error",
                 "content": {
@@ -1141,7 +1121,7 @@
           },
           "delete": {
             "summary": "Delete Event by ID",
-            "description": "This API Endpoint will delete event by ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Data</td>\n    <td>Event Deleted Successfully.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>Event Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",       
+            "description": "This API Endpoint will delete event by ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Data</td>\n    <td>Event Deleted Successfully.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",       
             "security":[{"JWT": {} }],
             "tags": [
               "Event"
@@ -1174,16 +1154,6 @@
                   "application/json": {
                     "schema": {
                       "$ref": "#/components/serverResponseExample/unauthorizedEventError"
-                    }
-                  }
-                }
-              },
-              "404": {
-                "description": "Not Found Error",
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "$ref": "#/components/serverResponseExample/getEventByIdNotFoundError"
                     }
                   }
                 }
@@ -1863,14 +1833,14 @@
         "_id":"655cc081add35235c1c1682c",
         "amount": "50",
         "childAmount": "50",
-        "date": "01.01.1000",
+        "date": "1999-01-09",
         "deposit": "100",
         "description": "Thanks",
         "meals": "5",
         "reservationsEndsAt": "2",
         "reservationsStartAt": "1",
         "showStarts": "1",
-        "status": "Accepted",
+        "status": "book now",
         "title": "MR."
       }
     },
@@ -1895,7 +1865,7 @@
         "message": "BlessUs",
         "name": "Fabio",
         "numberOfGuests": "10",
-        "showDate": "02.02.2024"
+        "showDate": "2024-01-01"
         
       }
     },
@@ -1908,7 +1878,7 @@
         "message": "BlessUs",
         "name": "Fabio",
         "numberOfGuests": "10",
-        "showDate": "02.02.2024"
+        "showDate": "2024-01-01"
       }
     },
     "getEventByIdSuccess": {
@@ -1916,7 +1886,7 @@
         "_id":"655cc081add35235c1c1682c",
         "amount": 100,
         "childAmount": 100,
-        "date": "02.02.2024",
+        "date": "2024-01-01",
         "deposit": "9999988888",
         "description": "Nice event",
         "meals": "10",
