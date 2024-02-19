@@ -457,14 +457,13 @@ validation_rules3 = {
     "amount": "required",
     "childAmount": "required",
     "date": "required",
-    "deposit": "optional",
+    "deposit": "required",
     "description": "required",
-    "imageURL": "required",
     "meals": "required",
     "reservationsStartAt": "required",
     "reservationsEndsAt": "required",
     "showStarts": "required",
-    "status": "required",
+    "status": ["required", "in:book now,sold out,cancelled"],
     "title": "required"
     }
 
@@ -490,7 +489,6 @@ def create_event():
         "date": data.get("date"),
         "deposit": data.get("deposit"),
         "description": data.get("description"),
-        "imageURL": data.get("imageURL"),
         "meals": data.get("meals"),
         "reservationsStartAt": data.get("reservationsStartAt"),
         "reservationsEndsAt": data.get("reservationsEndsAt"),
@@ -504,14 +502,33 @@ def create_event():
     # Send the response in JSON format
     return jsonify(response_data)
 
+# def validate_data(data, validation_rules3):
+#     errors = []
+
+#     for field, rule in validation_rules3.items():
+#         if rule == "required" and not data.get(field):
+#             errors.append(f"{field} is required.")
+#         elif rule == "optional" and field in data and not data.get(field):
+#             errors.append(f"{field} must be optional.")
+
+#     return errors
 def validate_data(data, validation_rules3):
     errors = []
 
     for field, rule in validation_rules3.items():
-        if rule == "required" and not data.get(field):
-            errors.append(f"{field} is required.")
-        elif rule == "optional" and field in data and not data.get(field):
-            errors.append(f"{field} must be optional.")
+        if isinstance(rule, list):
+            for r in rule:
+                if r == "required" and not data.get(field):
+                    errors.append(f"{field} is required.")
+                elif r.startswith("in:"):
+                    values = r.split(":")[1].split(",")
+                    if data.get(field) not in values:
+                        errors.append(f"{field} must be one of {', '.join(values)}.")
+        else:
+            if rule == "required" and not data.get(field):
+                errors.append(f"{field} is required.")
+            elif rule == "optional" and field in data and not data.get(field):
+                errors.append(f"{field} must be optional.")
 
     return errors
 
@@ -532,7 +549,6 @@ def update_event(id):
         "date": existing_document.get("date"),
         "deposit": existing_document.get("deposit"),
         "description": existing_document.get("description"),
-        "imageURL": existing_document.get("imageURL"),
         "meals": existing_document.get("meals"),
         "reservationsStartAt": existing_document.get("reservationsStartAt"),
         "reservationsEndsAt": existing_document.get("reservationsEndsAt"),
@@ -564,7 +580,6 @@ def get_events():
 
 # Get a specific event by ID
 @app.route('/events/<id>')
-@jwt_required()
 def event(id):
     event = collection3.find_one({'_id':ObjectId(id)})
     if event:

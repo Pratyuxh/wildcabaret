@@ -217,7 +217,7 @@
         "get": {
           "tags": ["Booking"],
           "summary": "Return bookings",
-          "description": "This endpoint will get all bookings.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Booking Data</td>\n    <td>Return all the bookings.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
+          "description": "This endpoint will get all bookings.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Booking Data</td>\n    <td>Return all the bookings.</td>\n  </tr>\n  <tr>\n   <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
           "security":[{"JWT": {} }],
           "responses": {
             "200": {
@@ -246,16 +246,6 @@
                       "message": "BlessUs"
                     }
                   ]
-                }
-              }
-            },
-            "401": {
-              "description": "Unauthorized Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/serverResponseExample/unauthorizedError"
-                  }
                 }
               }
             },
@@ -546,7 +536,7 @@
               "Contact Us"
             ],
             "summary": "Returns Contacts",
-            "description": "This endpoint will get all contacts.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Contact Request Data</td>\n    <td>Return all the contact requests.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
+            "description": "This endpoint will get all contacts.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Contact Request Data</td>\n    <td>Return all the contact requests.</td>\n  </tr>\n  <tr>\n   <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "security":[{"JWT": {} }],
             "responses": {
               "200": {
@@ -575,16 +565,6 @@
                       "showDate": "02.02.2024"
                     }
                     ]
-                  }
-                }
-              },
-              "401": {
-                "description": "Unauthorized Error",
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedError"
-                    }
                   }
                 }
               },
@@ -878,7 +858,7 @@
               "Event"
             ],
             "summary": "Return Events",
-            "description": "This endpoint will get all events.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Request Data</td>\n    <td>Return all the event requests.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
+            "description": "This endpoint will get all events.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Request Data</td>\n    <td>Return all the event requests.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "security":[{"JWT": {} }],
             "responses": {
               "200": {
@@ -892,13 +872,12 @@
                       "childAmount": "50",
                       "date": "01.01.1000",
                       "deposit": "100",
-                      "description": "Thanks",
-                      "imageURL": "www.xyz.com",
+                      "description": "Thanks",                   
                       "meals": "5",
                       "reservationsEndsAt": "2",
                       "reservationsStartAt": "1",
                       "showStarts": "1",
-                      "status": "Accepted",
+                      "status": "book now",
                       "title": "MR."
                     },
                     {
@@ -908,24 +887,23 @@
                       "date": "01.01.1000",
                       "deposit": "100",
                       "description": "Thanks",
-                      "imageURL": "www.xyz.com",
                       "meals": "5",
                       "reservationsEndsAt": "2",
                       "reservationsStartAt": "1",
                       "showStarts": "1",
-                      "status": "Accepted",
+                      "status": "cancelled",
                       "title": "MR."
                     }
                   ]
                   }
                 }
               },
-              "401": {
-                "description": "Unauthorized Error",
+              "400": {
+                "description": "Bad Request.",
                 "content": {
                   "application/json": {
                     "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedError"
+                      "$ref": "#/components/serverResponseExample/validationEventError"
                     }
                   }
                 }
@@ -947,7 +925,7 @@
               "Event"
             ],
             "summary": "Create a new Event",
-            "description": "This endpoint will create a new event.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Created</td>\n    <td>Returns the event request.</td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>Returns the validation errors.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
+            "description": "This endpoint will create a new event.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n3) The status must be one of **book now, sold out, cancelled**.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Created</td>\n    <td>Returns the event request.</td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>Returns the validation errors.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "security":[{"JWT": {} }],
             "requestBody": {
               "description": "Event Post Object",
@@ -1032,7 +1010,6 @@
                 "scheme": "bearer"
               }
             },
-            "security":[{"JWT": {} }],
             "parameters": [
               {
                 "in": "path",
@@ -1224,7 +1201,7 @@
             }
           }  
       },
-      "/events/<id>/image": {
+      "/events/{id}/image": {
         "post": {
           "tags": [
             "Event"
@@ -1292,13 +1269,33 @@
           }
         }
       },
-      "/events/<id>/image/<filename>": {
+      "/events/{id}/image/{filename}": {
         "delete": {
           "summary": "Delete Event Image",
           "description": "This API Endpoint will delete event image.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Image Data</td>\n    <td>File abc.jpg deleted successfully.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>File Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",       
           "security":[{"JWT": {} }],
           "tags": [
             "Event"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Delete Event Image",
+              "schema": {
+                "$ref": "#/components/schemas/id"
+              }
+            },
+            {
+              "in": "path",
+              "name": "filename",
+              "required": true,
+              "description": "Image Filename",
+              "schema": {
+                  "type": "string"
+              }
+          }
           ],
           "responses": {
             "200": {
@@ -1623,7 +1620,7 @@
       },
       "event": {
         "type": "object",
-        "required": ["amount", "childAmount", "date", "deposit", "description", "imageURL", "meals", "reservationsStartAt", "reservationsEndsAt", "showStarts", "status", "title"],
+        "required": ["amount", "childAmount", "date", "deposit", "description", "meals", "reservationsStartAt", "reservationsEndsAt", "showStarts", "status", "title"],
         "properties": {
               "amount": {
                 "type": "string",
@@ -1645,10 +1642,6 @@
                 "minimum": "100"
               },
               "description": {
-                "type": "string",
-                "format": "string"
-              },
-              "imageURL": {
                 "type": "string",
                 "format": "string"
               },
@@ -1723,50 +1716,6 @@
                 "format": "email"
             }
         }
-      },
-      "bookings": {
-        "type": "object",
-        "properties": {
-          "booking": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/booking"
-          }
-        }
-     }
-      },
-      "events": {
-        "type": "object",
-        "properties": {
-          "event": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/event"
-          }
-        }
-     }
-      },
-      "contacts": {
-        "type": "object",
-        "properties": {
-          "contact": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/contact"
-          }
-        }
-     }
-      },
-      "newsletters": {
-        "type": "object",
-        "properties": {
-          "newsletter": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/newsletter"
-          }
-        }
-     }
       }
      },
     "serverResponseExample": {
@@ -1843,7 +1792,16 @@
         "properties": {
           "errors": {
             "type": "array",
-              "example": ["amount is required", "childAmount is required", "date is required", "deposit is required", "description is required", "imageURL is required", "imageURL is required", "meals is required", "reservationsStartAt is required", "reservationsEndsAt is required", "showStarts is required", "status is required", "title is required"]
+              "example": ["amount is required", "childAmount is required", "date is required", "deposit is required", "description is required", "meals is required", "reservationsStartAt is required", "reservationsEndsAt is required", "showStarts is required", "status is required", "title is required"]
+        }
+      }
+    },
+    "validationEventError": {
+      "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+              "example": ["status is required", "status must be one of book now, sold out, cancelled."]
         }
       }
     },
@@ -1903,7 +1861,6 @@
         "date": "01.01.1000",
         "deposit": "100",
         "description": "Thanks",
-        "imageURL": "www.xyz.com",
         "meals": "5",
         "reservationsEndsAt": "2",
         "reservationsStartAt": "1",
@@ -1957,7 +1914,6 @@
         "date": "02.02.2024",
         "deposit": "9999988888",
         "description": "Nice event",
-        "imageURL": "www.xyz.com",
         "meals": "10",
         "reservationsEndsAt": "9",
         "reservationsStartAt": "5",
@@ -2024,7 +1980,6 @@
         "date": "01.01.1000",
         "deposit": "100",
         "description": "Thanks",
-        "imageURL": "www.xyz.com",
         "meals": "5",
         "reservationsEndsAt": "2",
         "reservationsStartAt": "1",
