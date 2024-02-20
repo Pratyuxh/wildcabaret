@@ -1563,7 +1563,7 @@
                 "format": "email"
               },
             "contactNumber": {
-                "type": "string",
+                "type": "number",
                 "format": "number"
               },
             "dietaryRequirements": {
@@ -1579,7 +1579,7 @@
                 "format": "string"
               },
             "numberOfGuests": {
-                "type": "string",
+                "type": "number",
                 "format": "number"
               },
             "showDate": {
@@ -1593,13 +1593,13 @@
         "required": ["amount", "childAmount", "date", "deposit", "description", "meals", "reservationsStartAt", "reservationsEndsAt", "showStarts", "status", "title"],
         "properties": {
               "amount": {
-                "type": "float",
-                "format": "float",
+                "type": "number",
+                "format": "number",
                 "minimum": "0"
               },
               "childAmount": {
-                "type": "string",
-                "format": "string",
+                "type": "number",
+                "format": "number",
                 "minimum": "0"
               },
               "date": {
@@ -1607,8 +1607,8 @@
                 "format": "string"
               },
               "deposit": {
-                "type": "float",
-                "format": "float",
+                "type": "number",
+                "format": "number",
                 "minimum": "1"
               },
               "description": {
@@ -1708,7 +1708,7 @@
     },
     "unauthorizedIdError": {
       "example": {
-        "msg": "Invalid ID"
+        "msg": "Invalid Object ID"
       }
     },
     "logoutUnauthorizedError": {

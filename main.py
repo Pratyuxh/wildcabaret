@@ -629,10 +629,8 @@ def delete_event(id):
     else:
         return jsonify({"error": "Event not found or not deleted"}), 404
 
-# # UPLOAD_FOLDER = '/Users/pratyushsharma/booking'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 MAX_FILE_SIZE_BYTES = 500 * 500 #10 * 1024 * 1024
-# DigitalOcean Spaces configurations
 DO_SPACES_ENDPOINT = 'https://wild-cabarets.fra1.digitaloceanspaces.com'  # Replace with your Space URL
 DO_ACCESS_KEY = 'DO00H8HLFYNACV6LJ3GP'  # Replace with your DigitalOcean Spaces access key
 DO_SECRET_KEY = 'fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY'  # Replace with your DigitalOcean Spaces secret key
@@ -644,29 +642,33 @@ def allowed_file_size(file):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def upload_to_digitalocean(file, file_name, device_type, event_id):
+def upload_to_digitalocean(file, file_name, device_type, id):
     try:
         s3 = boto3.client('s3',
             aws_access_key_id='DO00H8HLFYNACV6LJ3GP',
             aws_secret_access_key='fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY',
             endpoint_url=DO_SPACES_ENDPOINT
         )
-
+    
         # Create a folder with the specified device type
         folder_path = f"{device_type}/"
-        file_path = os.path.join(folder_path, file_name)
+        # file_path = os.path.join(folder_path, file_name)
+        file_path = os.path.join(folder_path, f"{id}_{file_name}")
 
         # Upload the file to DigitalOcean Spaces
         s3.upload_fileobj(file, DO_BUCKET_NAME, file_path)
 
         # Get the public URL of the uploaded file
         file_url = f"{DO_SPACES_ENDPOINT}/{DO_BUCKET_NAME}/{file_path}"
+        # file_url = f"{DO_SPACES_ENDPOINT}/{DO_BUCKET_NAME}/{folder_path}{id}_{file_name}"
+        
+
 
         file_info = {
             'filename': file_name,
             'device_type': device_type,
             'url': file_url,
-            'event_id': event_id  # Assuming you have an 'id' variable available in your code
+            'id': id  # Assuming you have an 'id' variable available in your code
         }
         files_collection.insert_one(file_info)
 
@@ -775,10 +777,6 @@ def delete_uploaded_image(id, filename):
 
     if not allowed_file(filename):
         return jsonify({"error": "Invalid filename format"}), 401
-
-     # Check if file exists in DigitalOcean Spaces bucket
-    # if not file_exists_in_digitalocean(filename):
-    #     return jsonify({"error": "File does not exist"}), 404  # Use 404 for "Not Found"
 
     try:
         delete_file_from_digitalocean(filename)
