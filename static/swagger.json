@@ -1594,13 +1594,11 @@
         "properties": {
               "amount": {
                 "type": "number",
-                "format": "number",
-                "minimum": "0"
+                "format": "number"
               },
               "childAmount": {
                 "type": "number",
-                "format": "number",
-                "minimum": "0"
+                "format": "number"
               },
               "date": {
                 "type": "string",
@@ -1608,8 +1606,7 @@
               },
               "deposit": {
                 "type": "number",
-                "format": "number",
-                "minimum": "1"
+                "format": "number"
               },
               "description": {
                 "type": "string",
@@ -1617,8 +1614,7 @@
               },
               "meals": {
                 "type": "string",
-                "format": "string",
-                "minimum": "1"
+                "format": "string"
               },
               "reservationsStartAt": {
                 "type": "string",

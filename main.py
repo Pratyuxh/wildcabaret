@@ -283,6 +283,18 @@ def validate_data(data, validation_rules):
             errors.append(f"{field} is required.")
         elif rule == "optional" and field in data and not data.get(field):
             errors.append(f"{field} must be optional.")
+        elif rule.startswith("in:"):
+            values = rule.split(":")[1].split(",")
+            if data.get(field) not in values:
+                errors.append(f"{field} must be one of {', '.join(values)}.")
+        elif rule == "number":
+            if not isinstance(data.get(field), int):
+                errors.append(f"{field} must be a number.")
+        elif rule == "date":
+            try:
+                datetime.strptime(data.get(field), "%Y-%m-%d")
+            except ValueError:
+                errors.append(f"{field} must be in YYYY-MM-DD format.")
 
     return errors
 
@@ -650,13 +662,18 @@ def upload_to_digitalocean(file, file_name, device_type, id):
             endpoint_url=DO_SPACES_ENDPOINT
         )
     
-        # Create a folder with the specified device type
+        unique_filename = f"{id}_{file_name.replace(' ', '_')}"
+
         folder_path = f"{device_type}/"
-        # file_path = os.path.join(folder_path, file_name)
-        file_path = os.path.join(folder_path, f"{id}_{file_name}")
+        file_path = os.path.join(folder_path, unique_filename)
 
         # Upload the file to DigitalOcean Spaces
-        s3.upload_fileobj(file, DO_BUCKET_NAME, file_path)
+        s3.upload_fileobj(
+            file,
+            DO_BUCKET_NAME,
+            file_path,
+            ExtraArgs={'ACL': 'public-read'}  # Set ACL to public-read
+        )
 
         # Get the public URL of the uploaded file
         file_url = f"{DO_SPACES_ENDPOINT}/{DO_BUCKET_NAME}/{file_path}"
