@@ -987,7 +987,7 @@ def file_exists_in_digitalocean(filename):
     except:
         return False
 
-@app.route('/events/image/<filename>', methods=['DELETE'])
+@app.route('/events/image/<id>/<filename>', methods=['DELETE'])
 @jwt_required()
 def delete_uploaded_image(id, filename):
     if not ObjectId.is_valid(id):
@@ -1000,10 +1000,11 @@ def delete_uploaded_image(id, filename):
         delete_file_from_digitalocean(filename)
         delete_file_from_mongodb(filename)
 
-        return {'message': f'File {filename} deleted successfully'}
+        return {'message': f'File {filename} for ID {id} deleted successfully'}
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
 
 class SubscribeResource(Resource):
     @jwt_required()
