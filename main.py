@@ -803,9 +803,9 @@ import time
 def upload_to_digitalocean(file, file_name, device_type, id):
     try:
         s3 = boto3.client('s3',
-            aws_access_key_id='DO00H8HLFYNACV6LJ3GP',
-            aws_secret_access_key='fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY',
-            endpoint_url=DO_SPACES_ENDPOINT
+        aws_access_key_id=DO_ACCESS_KEY,
+        aws_secret_access_key=DO_SECRET_KEY,
+        endpoint_url=DO_SPACES_ENDPOINT
         )
 
         file_name = file_name.strip().replace(' ', '_')
@@ -897,15 +897,15 @@ def upload_to_digitalocean(file, file_name, device_type, id):
 #         return jsonify({'error': str(e)}), 500
 
 @app.route('/events/image', methods=['POST', 'DELETE'])
-# @jwt_required()
+@jwt_required()
 def upload_and_delete_image():
     try:
         file_name = None
 
         s3 = boto3.client('s3',
-            aws_access_key_id='DO00H8HLFYNACV6LJ3GP',
-            aws_secret_access_key='fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY',
-            endpoint_url=DO_SPACES_ENDPOINT
+        aws_access_key_id=DO_ACCESS_KEY,
+        aws_secret_access_key=DO_SECRET_KEY,
+        endpoint_url=DO_SPACES_ENDPOINT
         )
 
         if request.method == 'POST':
@@ -928,42 +928,47 @@ def upload_and_delete_image():
 
             return jsonify({'message': 'Image uploaded successfully', 'file_url': file_url})
 
-        elif request.method == 'DELETE':
+        # elif request.method == 'DELETE':
 
-            file_name = request.json.get('filename') or request.args.get('filename')
+        #     data = request.json
+        #     object_key = data.get('object_key')
 
-            if file_name is None:
-                return jsonify({"error": "No file specified for deletion"}), 400
+        #     if object_key is None:
+        #         return jsonify({"error": "No file specified for deletion"}), 400
 
-            # Delete the file from DigitalOcean Spaces
-            s3 = boto3.client('s3',
-                aws_access_key_id='DO00H8HLFYNACV6LJ3GP',
-                aws_secret_access_key='fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY',
-                endpoint_url=DO_SPACES_ENDPOINT
-            )
-            # filename = request.json.get('filename')  # Assuming you send the filename in the request body
+        #     # Delete the file from DigitalOcean Spaces
+        #     s3 = boto3.client('s3',
+        #     aws_access_key_id=DO_ACCESS_KEY,
+        #     aws_secret_access_key=DO_SECRET_KEY,
+        #     endpoint_url=DO_SPACES_ENDPOINT
+        # )
+        #     # filename = request.json.get('filename')  # Assuming you send the filename in the request body
 
-            delete_file_from_digitalocean(file_name)
+        #     delete_file_from_digitalocean()
 
-            s3.delete_object(Bucket= DO_BUCKET_NAME, Key=file_name)
+        #     s3.delete_object(Bucket=DO_BUCKET_NAME, Key=object_key)
 
-            files_collection.delete_one({'filename': file_name})
+        #     files_collection.delete_one({'filename': file_name})
 
-            return {'message': f'{file_name} deleted successfully'}
+        #     return {'message': f'{file_name} deleted successfully'}
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-def delete_file_from_digitalocean(file_name):
+def delete_file_from_digitalocean():
     try:
         s3 = boto3.client('s3',
-            aws_access_key_id='DO00H8HLFYNACV6LJ3GP',
-            aws_secret_access_key='fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY',
-            endpoint_url=DO_SPACES_ENDPOINT
-        )
+        aws_access_key_id=DO_ACCESS_KEY,
+        aws_secret_access_key=DO_SECRET_KEY,
+        endpoint_url=DO_SPACES_ENDPOINT
+    )
 
         # Delete the file from DigitalOcean Spaces
-        s3.delete_object(Bucket=DO_BUCKET_NAME, Key=file_name)
+        data = request.json
+        object_key = data.get('object_key')
+
+        # Delete the object from the Space
+        response = s3.delete_object(Bucket=DO_BUCKET_NAME, Key=object_key)
 
     except NoCredentialsError:
         raise Exception('Credentials not available. Check your DigitalOcean Spaces access key and secret key.')
@@ -997,11 +1002,32 @@ def delete_uploaded_image(id, filename):
         return jsonify({"error": "Invalid filename format"}), 401
 
     try:
-        delete_file_from_digitalocean(filename)
+        
+        delete_file_from_digitalocean()
         delete_file_from_mongodb(filename)
 
         return {'message': f'File {filename} for ID {id} deleted successfully'}
 
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+s3 = boto3.client('s3',
+                  aws_access_key_id=DO_ACCESS_KEY,
+                  aws_secret_access_key=DO_SECRET_KEY,
+                  endpoint_url=DO_SPACES_ENDPOINT)
+    
+@app.route('/delete_eventimage', methods=['POST'])
+@jwt_required()
+def delete_object():
+    try:
+        # Get the object key from the request
+        data = request.json
+        object_key = data.get('object_key')
+
+        # Delete the object from the Space
+        response = s3.delete_object(Bucket=DO_BUCKET_NAME, Key=object_key)
+
+        return jsonify({'message': 'File deleted successfully'})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -1068,6 +1094,79 @@ class SubscribersListResource(Resource):
 api.add_resource(SubscribeResource, "/newsletter-signup")
 api.add_resource(UnsubscribeResource, "/unsubscribe")
 api.add_resource(SubscribersListResource, "/newsletter-signup")
+
+# "/events/image/{id}/{filename}": {
+#         "delete": {
+#           "summary": "Delete Event Image Info from database",
+#           "description": "This API Endpoint will delete event image info from database.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Image Data</td>\n    <td>File abc.jpg deleted successfully.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>File Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",       
+#           "security":[{"JWT": {} }],
+#           "tags": [
+#             "Event"
+#           ],
+#           "parameters": [
+#             {
+#               "in": "path",
+#               "name": "id",
+#               "required": true,
+#               "description": "Delete Event Image",
+#               "schema": {
+#                 "$ref": "#/components/schemas/id"
+#               }
+#             },
+#             {
+#               "in": "path",
+#               "name": "filename",
+#               "required": true,
+#               "description": "Image Filename",
+#               "schema": {
+#                   "type": "string"
+#               }
+#           }
+#           ],
+#           "responses": {
+#             "200": {
+#               "description": "Event Image Data",
+#               "content": {
+#                 "application/json": {
+#                   "schema": {
+#                     "$ref": "#/components/serverResponseExample/deleteEventImageByIdSuccess"
+#                   }
+#                 }
+#               }
+#             },
+#             "401": {
+#               "description": "Unauthorized Error",
+#               "content": {
+#                 "application/json": {
+#                   "schema": {
+#                     "$ref": "#/components/serverResponseExample/unauthorizedIdError"
+#                   }
+#                 }
+#               }
+#             },
+#             "404": {
+#               "description": "Not Found Error",
+#               "content": {
+#                 "application/json": {
+#                   "schema": {
+#                     "$ref": "#/components/serverResponseExample/getEventByIdNotFoundError"
+#                   }
+#                 }
+#               }
+#             },
+#             "500": {
+#               "description": "Server Error",
+#               "content": {
+#                 "application/json": {
+#                   "schema": {
+#                     "$ref": "#/components/serverResponseExample/serverError"
+#                   }
+#                 }
+#               }
+#             }
+#           }
+#         }
+#       },
 
 # # Delete a newsletter
 # @app.route('/newsletter-signup/<id>', methods=['DELETE'])
