@@ -654,6 +654,152 @@ def allowed_file_size(file):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+# def upload_to_digitalocean(file, file_name, device_type, id):
+#     try:
+#         s3 = boto3.client('s3',
+#             aws_access_key_id='DO00H8HLFYNACV6LJ3GP',
+#             aws_secret_access_key='fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY',
+#             endpoint_url=DO_SPACES_ENDPOINT
+#         )
+#         id = id.strip().replace(' ', '_')
+#         file_name = file_name.strip().replace(' ', '_')
+
+#         unique_filename = f"{id}_{file_name}"
+
+#         folder_path = f"{device_type}/"
+#         file_path = os.path.join(folder_path, unique_filename)
+
+#         # Upload the file to DigitalOcean Spaces
+#         s3.upload_fileobj(
+#             file,
+#             DO_BUCKET_NAME,
+#             file_path,
+#             ExtraArgs={'ACL': 'public-read'}  # Set ACL to public-read
+#         )
+
+#         # Get the public URL of the uploaded file
+#         # file_url = f"{DO_SPACES_ENDPOINT}/{DO_BUCKET_NAME}/{file_path}"
+#         # file_url = f"{DO_SPACES_ENDPOINT}/{DO_BUCKET_NAME}/{folder_path}{id}_{file_name}"
+#         file_url = f"{DO_SPACES_ENDPOINT}/{DO_BUCKET_NAME}/{file_path}"
+
+#         file_info = {
+#             'filename': file_name,
+#             'device_type': device_type,
+#             'url': file_url,
+#             'id': id  # Assuming you have an 'id' variable available in your code
+#         }
+#         files_collection.insert_one(file_info)
+
+#         return file_url
+
+#     except NoCredentialsError:
+#         raise Exception('Credentials not available. Check your DigitalOcean Spaces access key and secret key.')
+#     except Exception as e:
+#         raise Exception(str(e))
+
+# @app.route('/events/image', methods=['POST', 'DELETE'])
+# # @jwt_required()
+# def upload_and_delete_image(id):
+#     try:
+#         file_name = None
+
+#         s3 = boto3.client('s3',
+#             aws_access_key_id='DO00H8HLFYNACV6LJ3GP',
+#             aws_secret_access_key='fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY',
+#             endpoint_url=DO_SPACES_ENDPOINT
+#         )
+
+#         if request.method == 'POST':
+#             # Check if the POST request has the file part
+#             if 'file' not in request.files or 'device_type' not in request.form:
+#                 return jsonify({"error": "No file or device type provided"}), 400
+
+#             file = request.files['file']
+#             device_type = request.form['device_type']
+
+#             # If the user does not select a file, the browser submits an empty file without a filename
+#             if file.filename == '':
+#                 return jsonify({"error": "No selected file"}), 400
+
+#             file_name = f"{file.filename}"
+
+#             # Upload the file to DigitalOcean Spaces and get the file URL
+#             file_url = upload_to_digitalocean(file, file_name, device_type, id)
+
+#             return jsonify({'message': 'Image uploaded successfully', 'file_url': file_url})
+
+#         elif request.method == 'DELETE':
+
+#             file_name = request.json.get('filename') or request.args.get('filename')
+
+#             if file_name is None:
+#                 return jsonify({"error": "No file specified for deletion"}), 400
+
+#             # Delete the file from DigitalOcean Spaces
+#             s3 = boto3.client('s3',
+#                 aws_access_key_id='DO00H8HLFYNACV6LJ3GP',
+#                 aws_secret_access_key='fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY',
+#                 endpoint_url=DO_SPACES_ENDPOINT
+#             )
+#             # filename = request.json.get('filename')  # Assuming you send the filename in the request body
+
+#             delete_file_from_digitalocean(file_name)
+
+#             s3.delete_object(Bucket= DO_BUCKET_NAME, Key=file_name)
+
+#             files_collection.delete_one({'filename': file_name})
+
+#             return {'message': f'{file_name} deleted successfully'}
+
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
+    
+import time
+
+# def upload_to_digitalocean(file, file_name, device_type):
+#     try:
+#         s3 = boto3.client('s3',
+#             aws_access_key_id='DO00H8HLFYNACV6LJ3GP',
+#             aws_secret_access_key='fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY',
+#             endpoint_url=DO_SPACES_ENDPOINT
+#         )
+
+#         file_name = file_name.strip().replace(' ', '_')
+
+#         # Generate a timestamp
+#         timestamp = int(time.time())
+
+#         unique_filename = f"{timestamp}_{file_name}"
+
+#         folder_path = f"{device_type}/"
+#         file_path = os.path.join(folder_path, unique_filename)
+
+#         # Upload the file to DigitalOcean Spaces
+#         s3.upload_fileobj(
+#             file,
+#             DO_BUCKET_NAME,
+#             file_path,
+#             ExtraArgs={'ACL': 'public-read'}  # Set ACL to public-read
+#         )
+
+#         # Get the public URL of the uploaded file
+#         file_url = f"{DO_SPACES_ENDPOINT}/{DO_BUCKET_NAME}/{file_path}"
+
+#         file_info = {
+#             'filename': file_name,
+#             'device_type': device_type,
+#             'url': file_url,
+#             'timestamp': timestamp
+#         }
+#         files_collection.insert_one(file_info)
+
+#         return file_url
+
+#     except NoCredentialsError:
+#         raise Exception('Credentials not available. Check your DigitalOcean Spaces access key and secret key.')
+#     except Exception as e:
+#         raise Exception(str(e))
+
 def upload_to_digitalocean(file, file_name, device_type, id):
     try:
         s3 = boto3.client('s3',
@@ -661,11 +807,11 @@ def upload_to_digitalocean(file, file_name, device_type, id):
             aws_secret_access_key='fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY',
             endpoint_url=DO_SPACES_ENDPOINT
         )
-    
-        unique_filename = f"{id}_{file_name.replace(' ', '_')}"
 
-        folder_path = f"{device_type}/"
-        file_path = os.path.join(folder_path, unique_filename)
+        file_name = file_name.strip().replace(' ', '_')
+
+        folder_path = f"{device_type}/{id}/"  # Include the id in the folder path
+        file_path = os.path.join(folder_path, file_name)
 
         # Upload the file to DigitalOcean Spaces
         s3.upload_fileobj(
@@ -676,16 +822,13 @@ def upload_to_digitalocean(file, file_name, device_type, id):
         )
 
         # Get the public URL of the uploaded file
-        file_url = f"{DO_SPACES_ENDPOINT}/{DO_BUCKET_NAME}/{file_path}"
-        # file_url = f"{DO_SPACES_ENDPOINT}/{DO_BUCKET_NAME}/{folder_path}{id}_{file_name}"
-        
-
+        file_url = f"{DO_SPACES_ENDPOINT}/{DO_BUCKET_NAME}/{folder_path}{file_name}"
 
         file_info = {
             'filename': file_name,
             'device_type': device_type,
             'url': file_url,
-            'id': id  # Assuming you have an 'id' variable available in your code
+            'id': id
         }
         files_collection.insert_one(file_info)
 
@@ -696,9 +839,66 @@ def upload_to_digitalocean(file, file_name, device_type, id):
     except Exception as e:
         raise Exception(str(e))
 
-@app.route('/events/<id>/image', methods=['POST', 'DELETE'])
-@jwt_required()
-def upload_and_delete_image(id):
+# @app.route('/events/image', methods=['POST', 'DELETE'])
+# # @jwt_required()
+# def upload_and_delete_image():
+#     try:
+#         file_name = None
+
+#         s3 = boto3.client('s3',
+#             aws_access_key_id='DO00H8HLFYNACV6LJ3GP',
+#             aws_secret_access_key='fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY',
+#             endpoint_url=DO_SPACES_ENDPOINT
+#         )
+
+#         if request.method == 'POST':
+#             # Check if the POST request has the file part
+#             if 'file' not in request.files or 'device_type' not in request.form:
+#                 return jsonify({"error": "No file or device type provided"}), 400
+
+#             file = request.files['file']
+#             device_type = request.form['device_type']
+
+#             # If the user does not select a file, the browser submits an empty file without a filename
+#             if file.filename == '':
+#                 return jsonify({"error": "No selected file"}), 400
+
+#             file_name = f"{file.filename}"
+
+#             # Upload the file to DigitalOcean Spaces and get the file URL
+#             file_url = upload_to_digitalocean(file, file_name, device_type)
+
+#             return jsonify({'message': 'Image uploaded successfully', 'file_url': file_url})
+
+#         elif request.method == 'DELETE':
+
+#             file_name = request.json.get('filename') or request.args.get('filename')
+
+#             if file_name is None:
+#                 return jsonify({"error": "No file specified for deletion"}), 400
+
+#             # Delete the file from DigitalOcean Spaces
+#             s3 = boto3.client('s3',
+#                 aws_access_key_id='DO00H8HLFYNACV6LJ3GP',
+#                 aws_secret_access_key='fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY',
+#                 endpoint_url=DO_SPACES_ENDPOINT
+#             )
+#             # filename = request.json.get('filename')  # Assuming you send the filename in the request body
+
+#             delete_file_from_digitalocean(file_name)
+
+#             s3.delete_object(Bucket= DO_BUCKET_NAME, Key=file_name)
+
+#             files_collection.delete_one({'filename': file_name})
+
+#             return {'message': f'{file_name} deleted successfully'}
+
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
+
+@app.route('/events/image', methods=['POST', 'DELETE'])
+# @jwt_required()
+def upload_and_delete_image():
     try:
         file_name = None
 
@@ -710,11 +910,12 @@ def upload_and_delete_image(id):
 
         if request.method == 'POST':
             # Check if the POST request has the file part
-            if 'file' not in request.files or 'device_type' not in request.form:
-                return jsonify({"error": "No file or device type provided"}), 400
+            if 'file' not in request.files or 'device_type' not in request.form or 'id' not in request.form:
+                return jsonify({"error": "No file, device type, or id provided"}), 400
 
             file = request.files['file']
             device_type = request.form['device_type']
+            id = request.form['id']  # Add this line to get the id from the request form
 
             # If the user does not select a file, the browser submits an empty file without a filename
             if file.filename == '':
@@ -723,7 +924,7 @@ def upload_and_delete_image(id):
             file_name = f"{file.filename}"
 
             # Upload the file to DigitalOcean Spaces and get the file URL
-            file_url = upload_to_digitalocean(file, file_name, device_type, id)
+            file_url = upload_to_digitalocean(file, file_name, device_type, id)  # Pass id parameter here
 
             return jsonify({'message': 'Image uploaded successfully', 'file_url': file_url})
 
@@ -786,7 +987,7 @@ def file_exists_in_digitalocean(filename):
     except:
         return False
 
-@app.route('/events/<id>/image/<filename>', methods=['DELETE'])
+@app.route('/events/image/<filename>', methods=['DELETE'])
 @jwt_required()
 def delete_uploaded_image(id, filename):
     if not ObjectId.is_valid(id):
