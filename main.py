@@ -908,6 +908,7 @@ def upload_to_digitalocean(file, file_name, device_type, id):
 #         return jsonify({'error': str(e)}), 500
 
 @app.route('/events/image', methods=['POST', 'DELETE'])
+@jwt_required()
 def upload_and_delete_image():
     try:
         file_name = None
