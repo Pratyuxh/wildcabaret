@@ -1188,17 +1188,21 @@
                   "properties": {
                     "file": {
                       "type": "string",
-                      "format": "binary"
+                      "format": "binary",
+                      "nullable": false
                     },
                     "id": {
                       "type": "string",
-                      "format": "string"
+                      "format": "string",
+                      "nullable": false
                     },
                     "device_type": {
                       "type": "string",
-                      "format": "string"
+                      "format": "string",
+                      "nullable": false
                     }
-                  }
+                  },
+                  "required": ["file", "id", "device_type"]
                 }
               }
             }
