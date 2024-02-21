@@ -898,16 +898,6 @@
                   }
                 }
               },
-              "400": {
-                "description": "Bad Request.",
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "$ref": "#/components/serverResponseExample/validationEventError"
-                    }
-                  }
-                }
-              },
               "500": {
                 "description": "Server Error",
                 "content": {
