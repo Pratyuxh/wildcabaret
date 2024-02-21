@@ -218,7 +218,6 @@
           "tags": ["Booking"],
           "summary": "Return bookings",
           "description": "This endpoint will get all bookings.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Booking Data</td>\n    <td>Return all the bookings.</td>\n  </tr>\n  <tr>\n   <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
-          "security":[{"JWT": {} }],
           "responses": {
             "200": {
               "description": "Booking Data",
@@ -338,7 +337,6 @@
           ],
           "summary": "Get Booking with given ID",
           "description": "This endpoint will get Booking by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Booking Data</td>\n    <td>Returns the booking with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>Booking Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
-          "security":[{"JWT": {} }],
           "parameters": [
             {
               "in": "path",
@@ -537,7 +535,6 @@
             ],
             "summary": "Returns Contacts",
             "description": "This endpoint will get all contacts.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Contact Request Data</td>\n    <td>Return all the contact requests.</td>\n  </tr>\n  <tr>\n   <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
-            "security":[{"JWT": {} }],
             "responses": {
               "200": {
                 "description": "Contact Us Request Data",
@@ -660,7 +657,6 @@
             ],
             "summary": "Get contact with given ID",
             "description": "This endpoint will get contact by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Contact Request Data</td>\n    <td>Returns the contact request with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>Contact Request Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
-            "security":[{"JWT": {} }],
             "parameters": [
               {
                 "in": "path",
@@ -859,7 +855,6 @@
             ],
             "summary": "Return Events",
             "description": "This endpoint will get all events.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Request Data</td>\n    <td>Return all the event requests.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
-            "security":[{"JWT": {} }],
             "responses": {
               "200": {
                 "description": "Events Data",

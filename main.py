@@ -336,7 +336,6 @@ def update_booking(id):
 
 # Get all books
 @app.route('/book-now', methods=['GET'])
-@jwt_required()
 def get_bookings():
     bookings = list(collection1.find())
     data = []
@@ -347,7 +346,6 @@ def get_bookings():
 
 # Get a specific booking by ID
 @app.route('/book-now/<id>', methods=['GET'])
-@jwt_required()
 def booking(id):
     if not ObjectId.is_valid(id):
         return jsonify({"error": "Invalid Object ID"}), 401  # Return 401 for invalid ID
@@ -446,7 +444,6 @@ def update_contact(id):
 
 # Get all contacts
 @app.route('/contact-us', methods=['GET'])
-@jwt_required()
 def get_contacts():
     contacts = list(collection2.find())
     data = []
@@ -457,7 +454,6 @@ def get_contacts():
 
 # Get a specific contact by ID
 @app.route('/contact-us/<id>')
-@jwt_required()
 def contact(id):
     if not ObjectId.is_valid(id):
         return jsonify({"error": "Invalid Object ID"}), 401  # Return 401 for invalid ID
