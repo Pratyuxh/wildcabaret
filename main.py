@@ -599,7 +599,7 @@ def update_event(id):
     elif result.modified_count == 0:
         return jsonify({"error": "Event not updated"}), 404
     else:
-        return jsonify(response_data)
+        return jsonify(merged_data)
 
 # Get all events
 @app.route('/events', methods=['GET'])
@@ -642,7 +642,7 @@ def delete_event(id):
         return jsonify({"error": "Event not found or not deleted"}), 404
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-MAX_FILE_SIZE_BYTES = 500 * 500 #10 * 1024 * 1024
+MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024
 DO_SPACES_ENDPOINT = 'https://wild-cabarets.fra1.digitaloceanspaces.com'  # Replace with your Space URL
 DO_ACCESS_KEY = 'DO00H8HLFYNACV6LJ3GP'  # Replace with your DigitalOcean Spaces access key
 DO_SECRET_KEY = 'fKbFfbNG2PcuyLCZ79xjePWYjmCP9wGCNdWgfgxCTnY'  # Replace with your DigitalOcean Spaces secret key
@@ -800,6 +800,8 @@ import time
 #     except Exception as e:
 #         raise Exception(str(e))
 
+from urllib.parse import quote
+
 def upload_to_digitalocean(file, file_name, device_type, id):
     try:
         s3 = boto3.client('s3',
@@ -808,10 +810,19 @@ def upload_to_digitalocean(file, file_name, device_type, id):
         endpoint_url=DO_SPACES_ENDPOINT
         )
 
+        # Replace spaces in the file name with underscores
         file_name = file_name.strip().replace(' ', '_')
 
+        # URL-encode the file name
+        encoded_file_name = quote(file_name, safe='')
+
+        unique_filename = f"{encoded_file_name}"
+
         folder_path = f"{device_type}/{id}/"  # Include the id in the folder path
-        file_path = os.path.join(folder_path, file_name)
+        # file_path = os.path.join(folder_path, file_name)
+        file_path = os.path.join(folder_path, unique_filename)
+
+
 
         # Upload the file to DigitalOcean Spaces
         s3.upload_fileobj(
@@ -897,7 +908,6 @@ def upload_to_digitalocean(file, file_name, device_type, id):
 #         return jsonify({'error': str(e)}), 500
 
 @app.route('/events/image', methods=['POST', 'DELETE'])
-@jwt_required()
 def upload_and_delete_image():
     try:
         file_name = None
@@ -916,6 +926,10 @@ def upload_and_delete_image():
             file = request.files['file']
             device_type = request.form['device_type']
             id = request.form['id']  # Add this line to get the id from the request form
+
+            # Check if the id exists in the database
+            if not collection3.find_one({"_id": ObjectId(id)}):
+                return jsonify({"error": "ID does not exist"}), 404
 
             # If the user does not select a file, the browser submits an empty file without a filename
             if file.filename == '':

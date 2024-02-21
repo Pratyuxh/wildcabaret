@@ -932,7 +932,7 @@
               "application/json"
             ],
             "responses": {
-              "200": {
+              "201": {
                 "description": "Event Created",
                 "content": {
                   "application/json": {
@@ -991,7 +991,6 @@
             ],
             "summary": "Get event with given ID",
             "description": "This endpoint will get event by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Data</td>\n    <td>Returns the event with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
-            "security":[{"JWT": {} }],
             "securityDefinitions": {
               "bearerAuth": {
                 "type": "apiKey",
@@ -1112,7 +1111,7 @@
           },
           "delete": {
             "summary": "Delete Event by ID",
-            "description": "This API Endpoint will delete event by ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Data</td>\n    <td>Event Deleted Successfully.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",       
+            "description": "This API Endpoint will delete event by ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Data</td>\n    <td>Event Deleted Successfully.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found Error</td>\n    <td>Event Not Found or Deleted</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",       
             "security":[{"JWT": {} }],
             "tags": [
               "Event"
@@ -1149,6 +1148,16 @@
                   }
                 }
               },
+              "404": {
+                "description": "Not Found Error",
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/serverResponseExample/getEventByIdNotFoundError"
+                    }
+                  }
+                }
+              },
               "500": {
                 "description": "Server Error",
                 "content": {
@@ -1169,7 +1178,7 @@
           ],
           "summary": "Upload an Image",
           "description": "This endpoint will upload a new image.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n3) The device_type must be one of **mobile, desktop**.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Image Uploaded</td>\n    <td>Returns the fileurl.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>413</td>\n    <td>Request Entity Too large</td>\n    <td>If request entity is too large</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
-          "security":[{"JWT": {} }],
+
           "requestBody": {
             "content": {
               "multipart/form-data": {
@@ -1247,7 +1256,7 @@
       "/delete_eventimage": {
         "post": {
           "summary": "Delete image file from DigitalOcean.",
-          "description": "This endpoint will delete an existing image.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Image Deleted</td>\n    <td>Deletes the file successfully.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>Invalid Object Key.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
+          "description": "This endpoint will delete an existing image.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Image Deleted</td>\n    <td>Deletes the file successfully.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>Invalid Object Key.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found Error</td>\n    <td>Event Not Found or Deleted.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
           "security":[{"JWT": {} }],
           "tags": [
             "Event"
@@ -1593,20 +1602,21 @@
         "required": ["amount", "childAmount", "date", "deposit", "description", "meals", "reservationsStartAt", "reservationsEndsAt", "showStarts", "status", "title"],
         "properties": {
               "amount": {
-                "type": "number",
-                "format": "number"
-              },
-              "childAmount": {
-                "type": "number",
-                "format": "number"
-              },
-              "date": {
                 "type": "string",
                 "format": "string"
               },
+              "childAmount": {
+                "type": "string",
+                "format": "string"
+              },
+              "date": {
+                "type": "string",
+                "format": "date",
+                "default": "YYYY-MM-DD"
+              },
               "deposit": {
-                "type": "number",
-                "format": "number"
+                "type": "string",
+                "format": "string"
               },
               "description": {
                 "type": "string",
@@ -1919,7 +1929,7 @@
     },
     "getEventByIdNotFoundError": {
       "example": {
-        "message": "Event not found" 
+        "message": "Event not found or deleted" 
       }
     },
     "getEventImageByIdNotFoundError": {
