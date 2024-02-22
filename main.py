@@ -535,7 +535,7 @@ def create_event():
     }
 
     # Send the response in JSON format
-    return jsonify(response_data)
+    return jsonify(response_data), 201
 
 def validate_data(data, validation_rules3):
     errors = []
