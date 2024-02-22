@@ -441,7 +441,7 @@ def update_contact(id):
     elif result.modified_count == 0:
         return jsonify({"error": "Contact not updated"}), 404
     else:
-        return jsonify(response_data)
+        return jsonify(merged_data)
 
 # Get all contacts
 @app.route('/contact-us', methods=['GET'])
