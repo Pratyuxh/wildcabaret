@@ -1,6 +1,7 @@
 import os
 import boto3
 import certifi
+import time
 from flask import Flask, jsonify, request, make_response, render_template, flash, redirect, g, after_this_request, current_app
 from flask_pymongo import PyMongo
 from flask_restful import Resource, Api
@@ -362,7 +363,7 @@ def booking(id):
 def delete_booking(id):
     # id = ObjectId(id)
     if not ObjectId.is_valid(id):
-        return jsonify({"error": "Invalid Object ID"}), 404  # Return 401 for invalid ID
+        return jsonify({"error": "Invalid Object ID"}), 404  
     result = collection1.delete_one({"_id": ObjectId(id)})
 
     if result.deleted_count > 0:
@@ -412,7 +413,7 @@ def validate_data(data, validation_rules):
 def update_contact(id):
     # id = ObjectId(id)
     if not ObjectId.is_valid(id):
-        return jsonify({"error": "Invalid Object ID"}), 404  # Return 401 for invalid ID
+        return jsonify({"error": "Invalid Object ID"}), 404 
 
     data = request.get_json()
     existing_document = collection2.find_one({'_id':ObjectId(id)})
@@ -456,7 +457,7 @@ def get_contacts():
 @app.route('/contact-us/<id>')
 def contact(id):
     if not ObjectId.is_valid(id):
-        return jsonify({"error": "Invalid Object ID"}), 404  # Return 401 for invalid ID
+        return jsonify({"error": "Invalid Object ID"}), 404  
 
     contact = collection2.find_one({'_id':ObjectId(id)})
     if contact:
@@ -749,8 +750,6 @@ def allowed_file(filename):
 
 #     except Exception as e:
 #         return jsonify({'error': str(e)}), 500
-    
-import time
 
 # def upload_to_digitalocean(file, file_name, device_type):
 #     try:
@@ -1027,7 +1026,7 @@ s3 = boto3.client('s3',
                   aws_secret_access_key=DO_SECRET_KEY,
                   endpoint_url=DO_SPACES_ENDPOINT)
     
-@app.route('/delete_eventimage', methods=['POST'])
+@app.route('/delete-eventimage', methods=['POST'])
 @jwt_required()
 def delete_object():
     try:

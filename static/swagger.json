@@ -265,7 +265,7 @@
             "Booking"
           ],
           "summary": "Create a new Booking",
-          "description": "This endpoint will create a new booking.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n3) The dietaryRequirements must be one of **Yes, No**.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Booking Created</td>\n    <td>Returns the created booking</td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>Returns the validation errors.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
+          "description": "This endpoint will create a new booking.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n3) The dietaryRequirements must be one of **Yes, No**.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Booking Created</td>\n    <td>Returns the created booking</td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>Returns the validation errors.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
           "requestBody": {
             "description": "Booking Post Object",
             "required": true,
@@ -294,16 +294,6 @@
                 "application/json": {
                   "schema": {
                     "$ref": "#/components/serverResponseExample/createBookingError"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Unauthorized Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/serverResponseExample/unauthorizedError"
                   }
                 }
               }
@@ -572,7 +562,7 @@
               "Contact Us"
             ],
             "summary": "Create a new Contact",
-            "description": "This endpoint will create a new contact request.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Contact Request Created</td>\n    <td>Returns the created contact request.</td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>Returns the validation errors.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
+            "description": "This endpoint will create a new contact request.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Contact Request Created</td>\n    <td>Returns the created contact request.</td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>Returns the validation errors.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "requestBody": {
               "description": "Contact Request Object",
               "required": true,
@@ -604,16 +594,6 @@
                   "application/json": {
                     "schema": {
                       "$ref": "#/components/serverResponseExample/createContactError"
-                    }
-                  }
-                }
-              },
-              "401": {
-                "description": "Unauthorized Error",
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedError"
                     }
                   }
                 }
@@ -1258,7 +1238,7 @@
           }
         }
       },
-      "/delete_eventimage": {
+      "/delete-eventimage": {
         "post": {
           "summary": "Delete image file.",
           "description": "This endpoint will delete an existing image.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n3) Object_key is the filename from the file_url: https://wild-cabarets.fra1.digitaloceanspaces.com/wild-cabarets/**filename** e.g from the file_url: https://wild-cabarets.fra1.digitaloceanspaces.com/wild-cabarets/**mobile/65d5c6c0dfaedf20d9fafa96/sample.png**, **mobile/65d5c6c0dfaedf20d9fafa96/sample.png** is the object_key.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Image Deleted</td>\n    <td>Deletes the file successfully.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found Error</td>\n    <td>Event Image Not Found or Deleted.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
@@ -1577,8 +1557,8 @@
                 "format": "email"
               },
             "contactNumber": {
-                "type": "number",
-                "format": "number"
+                "type": "string",
+                "format": "string"
               },
             "dietaryRequirements": {
                 "type": "string",
@@ -1593,8 +1573,8 @@
                 "format": "string"
               },
             "numberOfGuests": {
-                "type": "number",
-                "format": "number"
+                "type": "string",
+                "format": "string"
               },
             "showDate": {
                 "type": "string",
@@ -1667,7 +1647,7 @@
           },
         "contactNumber": {
             "type": "string",
-            "format": "number"
+            "format": "string"
           },
         "dietaryRequirements": {
             "type": "string",
@@ -1683,7 +1663,7 @@
           },
         "numberOfGuests": {
             "type": "string",
-            "format": "number"
+            "format": "string"
           },
         "showDate": {
             "type": "string",
