@@ -336,7 +336,7 @@
             "Booking"
           ],
           "summary": "Get Booking with given ID",
-          "description": "This endpoint will get Booking by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Booking Data</td>\n    <td>Returns the booking with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>Booking Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
+          "description": "This endpoint will get Booking by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Booking Data</td>\n    <td>Returns the booking with given ID.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>Booking Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
           "parameters": [
             {
               "in": "path",
@@ -355,16 +355,6 @@
                 "application/json": {
                   "schema": {
                     "$ref": "#/components/serverResponseExample/getBookingByIdSuccess"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Unauthorized Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/serverResponseExample/unauthorizedIdError"
                   }
                 }
               }
@@ -439,7 +429,7 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/serverResponseExample/unauthorizedIdError"
+                    "$ref": "#/components/serverResponseExample/unauthorizedError"
                   }
                 }
               }
@@ -500,7 +490,7 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/serverResponseExample/unauthorizedIdError"
+                    "$ref": "#/components/serverResponseExample/unauthorizedError"
                   }
                 }
               }
@@ -623,7 +613,7 @@
                 "content": {
                   "application/json": {
                     "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedIdError"
+                      "$ref": "#/components/serverResponseExample/unauthorizedError"
                     }
                   }
                 }
@@ -684,7 +674,7 @@
                 "content": {
                   "application/json": {
                     "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedIdError"
+                      "$ref": "#/components/serverResponseExample/unauthorizedError"
                     }
                   }
                 }
@@ -759,7 +749,7 @@
                 "content": {
                   "application/json": {
                     "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedIdError"
+                      "$ref": "#/components/serverResponseExample/unauthorizedError"
                     }
                   }
                 }
@@ -820,7 +810,7 @@
                 "content": {
                   "application/json": {
                     "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedIdError"
+                      "$ref": "#/components/serverResponseExample/unauthorizedError"
                     }
                   }
                 }
@@ -910,7 +900,7 @@
               "Event"
             ],
             "summary": "Create a new Event",
-            "description": "This endpoint will create a new event.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n3) The status must be one of **book now, sold out, cancelled**.\n\n4) The date must be in the format **YYYY-MM-DD**.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Created</td>\n    <td>Returns the event request.</td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>Returns the validation errors.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
+            "description": "This endpoint will create a new event.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n3) The status must be one of **book now, sold out, cancelled**.\n\n4) The date must be in the format **YYYY-MM-DD**.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>201</td>\n    <td>Event Created</td>\n    <td>Returns the event request.</td>\n  </tr>\n  <tr>\n    <td>400</td>\n    <td>Bad Request</td>\n    <td>Returns the validation errors.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "security":[{"JWT": {} }],
             "requestBody": {
               "description": "Event Post Object",
@@ -985,7 +975,7 @@
               "Event"
             ],
             "summary": "Get event with given ID",
-            "description": "This endpoint will get event by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Data</td>\n    <td>Returns the event with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
+            "description": "This endpoint will get event by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Data</td>\n    <td>Returns the event with given ID.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found Error</td>\n    <td>If ID is wrong or Document Not Found.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "securityDefinitions": {
               "bearerAuth": {
                 "type": "apiKey",
@@ -1017,8 +1007,8 @@
                   }
                 }
               },
-              "401": {
-                "description": "Unauthorized Error",
+              "404": {
+                "description": "Not Found Error",
                 "content": {
                   "application/json": {
                     "schema": {
@@ -1041,7 +1031,7 @@
           },
           "put": {
             "summary": "Update a Event by ID",
-            "description": "This endpoint will update Event by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Data</td>\n    <td>Updates the event with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n   <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",         
+            "description": "This endpoint will update Event by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Data</td>\n    <td>Updates the event with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n   <td>404</td>\n    <td>Not Found</td>\n    <td>Event Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",         
             "security":[{"JWT": {} }],
             "tags": [
               "Event"
@@ -1087,7 +1077,17 @@
                 "content": {
                   "application/json": {
                     "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedIdError"
+                      "$ref": "#/components/serverResponseExample/unauthorizedError"
+                    }
+                  }
+                }
+              },
+              "404": {
+                "description": "Not Found Error",
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/serverResponseExample/getEventByIdNotFoundError"
                     }
                   }
                 }
@@ -1138,7 +1138,7 @@
                 "content": {
                   "application/json": {
                     "schema": {
-                      "$ref": "#/components/serverResponseExample/unauthorizedIdError"
+                      "$ref": "#/components/serverResponseExample/unauthorizedError"
                     }
                   }
                 }
@@ -1172,7 +1172,7 @@
             "Event"
           ],
           "summary": "Upload an Image",
-          "description": "This endpoint will upload a new image.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n3) The device_type must be one of **mobile, desktop**.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Image Uploaded</td>\n    <td>Returns the fileurl.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>413</td>\n    <td>Request Entity Too large</td>\n    <td>If request entity is too large</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
+          "description": "This endpoint will upload a new image.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n3) The device_type must be one of **mobile, desktop**.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Image Uploaded</td>\n    <td>Returns the fileurl.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found Error</td>\n    <td>EventID Not Found</td>\n  </tr>\n  <tr>\n    <td>413</td>\n    <td>Request Entity Too large</td>\n    <td>If request entity is too large</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
           "security":[{"JWT": {} }],
           "requestBody": {
             "content": {
@@ -1220,7 +1220,17 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/serverResponseExample/unauthorizedIdError"
+                    "$ref": "#/components/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/serverResponseExample/getEventImageByIdNotFoundError"
                   }
                 }
               }
@@ -1251,7 +1261,7 @@
       "/delete_eventimage": {
         "post": {
           "summary": "Delete image file.",
-          "description": "This endpoint will delete an existing image.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n3) Object_key is the filename from the file_url: https://wild-cabarets.fra1.digitaloceanspaces.com/wild-cabarets/**filename** e.g from the file_url: https://wild-cabarets.fra1.digitaloceanspaces.com/wild-cabarets/**mobile/65d5c6c0dfaedf20d9fafa96/sample.png**, **mobile/65d5c6c0dfaedf20d9fafa96/sample.png** is the object_key.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Image Deleted</td>\n    <td>Deletes the file successfully.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>Invalid Object Key.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found Error</td>\n    <td>Event Not Found or Deleted.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
+          "description": "This endpoint will delete an existing image.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n3) Object_key is the filename from the file_url: https://wild-cabarets.fra1.digitaloceanspaces.com/wild-cabarets/**filename** e.g from the file_url: https://wild-cabarets.fra1.digitaloceanspaces.com/wild-cabarets/**mobile/65d5c6c0dfaedf20d9fafa96/sample.png**, **mobile/65d5c6c0dfaedf20d9fafa96/sample.png** is the object_key.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Image Deleted</td>\n    <td>Deletes the file successfully.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found Error</td>\n    <td>Event Image Not Found or Deleted.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
           "security":[{"JWT": {} }],
           "tags": [
             "Event"
@@ -1287,7 +1297,7 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/serverResponseExample/unauthorizedKeyError"
+                    "$ref": "#/components/serverResponseExample/unauthorizedError"
                   }
                 }
               }
@@ -1297,7 +1307,7 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/serverResponseExample/getEventImageByIdNotFoundError"
+                    "$ref": "#/components/serverResponseExample/deleteEventImageByIdNotFoundError"
                   }
                 }
               }
@@ -1713,7 +1723,7 @@
     },
     "unauthorizedIdError": {
       "example": {
-        "msg": "Invalid Object ID"
+        "msg": "Invalid Object ID or Document Not Found"
       }
     },
     "unauthorizedKeyError": {
@@ -1851,8 +1861,8 @@
         "deposit": "10",
         "description": "thanks",
         "meals": "1",
-        "reservationsEndsAt": "6:00PM",
-        "reservationsStartAt": "10:00AM",
+        "reservationsEndsAt": "7:15PM",
+        "reservationsStartAt": "6:30PM",
         "showStarts": "8:00PM",
         "status": "book now",
         "title": "FRIDAY CABARET SHOW"
@@ -1903,8 +1913,8 @@
         "deposit": "10",
         "description": "thanks",
         "meals": "1",
-        "reservationsEndsAt": "6:00PM",
-        "reservationsStartAt": "10:00AM",
+        "reservationsEndsAt": "7:15PM",
+        "reservationsStartAt": "6:30PM",
         "showStarts": "8:00PM",
         "status": "book now",
         "title": "FRIDAY CABARET SHOW"
@@ -1918,27 +1928,32 @@
     },
     "getBookingByIdNotFoundError": {
       "example": {
-        "message": "Booking not found" 
+        "message": "Invalid Object ID or Booking not found" 
       }
     },
     "getContactByIdNotFoundError": {
       "example": {
-        "message": "Contact not found" 
+        "message": "Invalid Object ID or Contact not found" 
       }
     },
     "getEventByIdNotFoundError": {
       "example": {
-        "message": "Event not found or deleted" 
+        "message": "Invalid Object ID or Event not found" 
       }
     },
     "getEventImageByIdNotFoundError": {
       "example": {
-        "message": "File Not found" 
+        "message": "Invalid Object ID or File not found" 
+      }
+    },
+    "deleteEventImageByIdNotFoundError": {
+      "example": {
+        "message": "Invalid Object Key" 
       }
     },
     "getNewsletterByIdNotFoundError": {
       "example": {
-        "message": "Newsletter not found" 
+        "message": "Invalid Object ID or Newsletter not found" 
       }
     },
     "updateBookingByIdSuccess": {

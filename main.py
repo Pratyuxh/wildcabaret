@@ -348,7 +348,7 @@ def get_bookings():
 @app.route('/book-now/<id>', methods=['GET'])
 def booking(id):
     if not ObjectId.is_valid(id):
-        return jsonify({"error": "Invalid Object ID"}), 401  # Return 401 for invalid ID
+        return jsonify({"error": "Invalid Object ID"}), 404  # Return 401 for invalid ID
     booking = collection1.find_one({'_id':ObjectId(id)})
     if booking:
         booking["_id"] = str(booking["_id"])
@@ -362,7 +362,7 @@ def booking(id):
 def delete_booking(id):
     # id = ObjectId(id)
     if not ObjectId.is_valid(id):
-        return jsonify({"error": "Invalid Object ID"}), 401  # Return 401 for invalid ID
+        return jsonify({"error": "Invalid Object ID"}), 404  # Return 401 for invalid ID
     result = collection1.delete_one({"_id": ObjectId(id)})
 
     if result.deleted_count > 0:
@@ -412,7 +412,7 @@ def validate_data(data, validation_rules):
 def update_contact(id):
     # id = ObjectId(id)
     if not ObjectId.is_valid(id):
-        return jsonify({"error": "Invalid Object ID"}), 401  # Return 401 for invalid ID
+        return jsonify({"error": "Invalid Object ID"}), 404  # Return 401 for invalid ID
 
     data = request.get_json()
     existing_document = collection2.find_one({'_id':ObjectId(id)})
@@ -456,7 +456,7 @@ def get_contacts():
 @app.route('/contact-us/<id>')
 def contact(id):
     if not ObjectId.is_valid(id):
-        return jsonify({"error": "Invalid Object ID"}), 401  # Return 401 for invalid ID
+        return jsonify({"error": "Invalid Object ID"}), 404  # Return 401 for invalid ID
 
     contact = collection2.find_one({'_id':ObjectId(id)})
     if contact:
@@ -471,7 +471,7 @@ def contact(id):
 def delete_contact(id):
     # id = ObjectId(id)
     if not ObjectId.is_valid(id):
-        return jsonify({"error": "Invalid Object ID"}), 401  # Return 401 for invalid ID
+        return jsonify({"error": "Invalid Object ID"}), 404  
 
     result = collection2.delete_one({"_id": ObjectId(id)})
 
@@ -564,7 +564,7 @@ def update_event(id):
     # id = ObjectId(id)
 
     if not ObjectId.is_valid(id):
-        return jsonify({"error": "Invalid Object ID"}), 401  # Return 401 for invalid ID
+        return jsonify({"error": "Invalid Object ID"}), 404  
 
     data = request.get_json()
     existing_document = collection3.find_one({'_id':ObjectId(id)})
@@ -612,7 +612,7 @@ def get_events():
 def event(id):
 
     if not ObjectId.is_valid(id):
-        return jsonify({"error": "Invalid Object ID"}), 401  # Return 401 for invalid ID
+        return jsonify({"error": "Invalid Object ID"}), 404
 
     event = collection3.find_one({'_id':ObjectId(id)})
     if event:
@@ -628,7 +628,7 @@ def delete_event(id):
     # id = ObjectId(id)
 
     if not ObjectId.is_valid(id):
-        return jsonify({"error": "Invalid Object ID"}), 401  # Return 401 for invalid ID
+        return jsonify({"error": "Invalid Object ID"}), 404
 
     result = collection3.delete_one({"_id": ObjectId(id)})
 
@@ -1007,10 +1007,10 @@ def file_exists_in_digitalocean(filename):
 @jwt_required()
 def delete_uploaded_image(id, filename):
     if not ObjectId.is_valid(id):
-        return jsonify({"error": "Invalid Object ID"}), 401
+        return jsonify({"error": "Invalid Object ID"}), 404
 
     if not allowed_file(filename):
-        return jsonify({"error": "Invalid filename format"}), 401
+        return jsonify({"error": "Invalid filename format"}), 404
 
     try:
         
