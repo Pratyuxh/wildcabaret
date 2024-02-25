@@ -29,19 +29,19 @@ app.config["CORS_HEADERS"] = "Content-Type"
 # mongo_db_url = os.environ.get("MONGO_DB_CONN_STRING")
 # client = MongoClient(mongo_db_url)
 
-# connection_string = f"mongodb://localhost:27017/wildcabarets"
-# client = MongoClient(connection_string)
+connection_string = f"mongodb://localhost:27017/wildcabaret"
+client = MongoClient(connection_string, tlsCAFile=certifi.where())
 
-# app.config['MONGO_URI'] = "mongodb://localhost:27017/wildcabarets"
-# mongo = PyMongo(app)
+app.config['MONGO_URI'] = "mongodb://localhost:27017/wildcabaret"
+mongo = PyMongo(app)
 # mongodb+srv://pratyush:43O86u20v1HPDL9h@superminds-cluster-7f2d92d1.mongo.ondigitalocean.com/wildcabarets?tls=true&authSource=admin&replicaSet=superminds-cluster
 
-connection_string = f"mongodb+srv://pratyush:43O86u20v1HPDL9h@superminds-cluster-7f2d92d1.mongo.ondigitalocean.com/wildcabaret?tls=true&authSource=admin&replicaSet=superminds-cluster" 
-client = MongoClient(connection_string, tlsCAFile=certifi.where())
-app.config['MONGO_URI'] = "mongodb+srv://pratyush:43O86u20v1HPDL9h@superminds-cluster-7f2d92d1.mongo.ondigitalocean.com/wildcabaret?tls=true&authSource=admin&replicaSet=superminds-cluster"
-mongo = PyMongo(app)
+# connection_string = f"mongodb+srv://pratyush:43O86u20v1HPDL9h@superminds-cluster-7f2d92d1.mongo.ondigitalocean.com/wildcabaret?tls=true&authSource=admin&replicaSet=superminds-cluster" 
+# client = MongoClient(connection_string, tlsCAFile=certifi.where())
+# app.config['MONGO_URI'] = "mongodb+srv://pratyush:43O86u20v1HPDL9h@superminds-cluster-7f2d92d1.mongo.ondigitalocean.com/wildcabaret?tls=true&authSource=admin&replicaSet=superminds-cluster"
+# mongo = PyMongo(app)
 
-# client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient('mongodb://localhost:27017/')
 db = client['wildcabaret']
 collection = db['users'] 
 collection1 = db['booking']
@@ -349,7 +349,7 @@ def get_bookings():
 @app.route('/book-now/<id>', methods=['GET'])
 def booking(id):
     if not ObjectId.is_valid(id):
-        return jsonify({"error": "Invalid Object ID"}), 404  # Return 401 for invalid ID
+        return jsonify({"error": "Invalid Object ID"}), 404  
     booking = collection1.find_one({'_id':ObjectId(id)})
     if booking:
         booking["_id"] = str(booking["_id"])
@@ -1026,7 +1026,7 @@ s3 = boto3.client('s3',
                   aws_secret_access_key=DO_SECRET_KEY,
                   endpoint_url=DO_SPACES_ENDPOINT)
     
-@app.route('/delete-eventimage', methods=['POST'])
+@app.route('/events/image/objectkey', methods=['DELETE'])
 @jwt_required()
 def delete_object():
     try:
