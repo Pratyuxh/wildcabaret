@@ -1026,7 +1026,7 @@ s3 = boto3.client('s3',
                   aws_secret_access_key=DO_SECRET_KEY,
                   endpoint_url=DO_SPACES_ENDPOINT)
     
-@app.route('/events/image/objectkey', methods=['DELETE'])
+@app.route('/events/image', methods=['DELETE'])
 @jwt_required()
 def delete_object():
     try:

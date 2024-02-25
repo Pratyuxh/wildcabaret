@@ -513,7 +513,7 @@
             "tags": [
               "Contact Us"
             ],
-            "summary": "Returns Contacts",
+            "summary": "Return Contacts",
             "description": "This endpoint will get all contacts.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Contact Request Data</td>\n    <td>Return all the contact requests.</td>\n  </tr>\n  <tr>\n   <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "responses": {
               "200": {
@@ -625,7 +625,7 @@
             "tags": [
               "Contact Us"
             ],
-            "summary": "Get contact with given ID",
+            "summary": "Get Contact with given ID",
             "description": "This endpoint will get contact by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Contact Request Data</td>\n    <td>Returns the contact request with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>Contact Request Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "parameters": [
               {
@@ -682,7 +682,7 @@
             }
           },
           "put": {
-            "summary": "Update a contact by ID",
+            "summary": "Update a Contact by ID",
             "description": "This endpoint will update a contact by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Contact Request Data</td>\n    <td>Updates the contact with given ID.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>If Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found</td>\n    <td>Contact Request Not Found</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "security":[{"JWT": {} }],
             "tags": [
@@ -954,7 +954,7 @@
             "tags": [
               "Event"
             ],
-            "summary": "Get event with given ID",
+            "summary": "Get Event with given ID",
             "description": "This endpoint will get event by given ID.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Data</td>\n    <td>Returns the event with given ID.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found Error</td>\n    <td>If ID is wrong or Document Not Found.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
             "securityDefinitions": {
               "bearerAuth": {
@@ -1236,11 +1236,9 @@
               }
             }
           }
-        }
-      },
-      "/events/image/objectkey": {
+        },
         "delete": {
-          "summary": "Delete image file.",
+          "summary": "Delete Image file.",
           "description": "This endpoint will delete an existing image.\n\n__Usage__:\n\n1) Click on the **Try it out** button.\n\n2) Click on the **Execute** button to submit the request.\n\n3) Object_key is the filename from the file_url: https://wild-cabarets.fra1.digitaloceanspaces.com/wild-cabarets/**filename** \n\n**The below table defines the HTTP Status codes that this API may return**\n\n<table>\n  <tr>\n    <td>Status Code</td>\n    <td>Description</td>\n    <td>Reason</td>\n  </tr>\n  <tr>\n    <td>200</td>\n    <td>Event Image Deleted</td>\n    <td>Deletes the file successfully.</td>\n  </tr>\n  <tr>\n    <td>401</td>\n    <td>Unauthorized</td>\n    <td>Missing Authorization Header.</td>\n  </tr>\n  <tr>\n    <td>404</td>\n    <td>Not Found Error</td>\n    <td>Event Image Not Found or Deleted.</td>\n  </tr>\n  <tr>\n    <td>500</td>\n    <td>Server Error</td>\n    <td>If Internal server error occured.</td>\n  </tr>\n</table>",
           "security":[{"JWT": {} }],
           "tags": [
